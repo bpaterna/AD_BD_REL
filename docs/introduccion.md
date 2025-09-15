@@ -27,10 +27,8 @@ Comandos básicos:
 - `DELETE`: eliminar registros
 - `CREATE`: definir tablas, claves, relaciones, etc.
 
-Ejemplo sencillo de consulta:
-
-        SELECT nombre FROM clientes WHERE ciudad = 'Valencia';
-
+!!! example "Ejemplo sencillo de consulta"
+    SELECT nombre FROM clientes WHERE ciudad = 'Valencia';
 
 ## Conectores y ORM
 
