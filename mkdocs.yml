@@ -14,6 +14,7 @@ theme:
     - search.suggest
     - content.tabs.link
 nav:
+  toc: false 
   - Inicio: index.md
   - 1. Introducción: introduccion.md
 markdown_extensions:
