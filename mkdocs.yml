@@ -1,0 +1,37 @@
+site_name: Acceso a datos. Bases de datos relacionales
+site_url: https://bpaterna.github.io/AD_BD_REL/
+site_author: Begoña Paterna
+theme:
+  name: material
+  language: es
+  palette:
+    scheme: default
+    primary: pink
+  features:
+    - navigation.instant
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.tabs.link
+nav:
+  - Inicio: index.md
+  - Unidad 1: unidad1.md
+  - Unidad 2: unidad2.md
+  - Unidad 3: unidad3.md
+markdown_extensions:
+  - admonition
+  - footnotes
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tabbed
+extra_css:
+  - stylesheets/extra.css
+use_directory_urls: false
+plugins:
+  - with-pdf:
+      output_path: pdf/AD_BD_REL.pdf
+      cover: true
+      toc_title: "Índice"
