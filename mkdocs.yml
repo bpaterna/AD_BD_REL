@@ -15,9 +15,6 @@ theme:
     - content.tabs.link
 nav:
   - Inicio: index.md
-  - Unidad 1: unidad1.md
-  - Unidad 2: unidad2.md
-  - Unidad 3: unidad3.md
 markdown_extensions:
   - admonition
   - footnotes
