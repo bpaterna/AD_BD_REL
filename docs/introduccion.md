@@ -15,13 +15,7 @@ Ejemplo de tabla `clientes`:
 
 La **Clave primaria (Primary Key)** es una columna (o conjunto de columnas) que **identifica de forma única** cada fila de una tabla. En el ejemplo: `id_cliente` es clave primaria en la tabla `clientes`.
 
-
-**Clave foránea (Foreign Key)**
-
-Es una columna que **hace referencia a una clave primaria de otra tabla** para establecer una relación. Por ejemplo, en otra tabla llamada `facturas`, el campo `id_cliente` puede ser clave foránea que apunta al campo id_clientes de la tabla `clientes`.
-
-
-**Lenguaje SQL**
+La **Clave foránea (Foreign Key)** es una columna que **hace referencia a una clave primaria de otra tabla** para establecer una relación. Por ejemplo, en otra tabla llamada `facturas`, el campo `id_cliente` puede ser clave foránea que apunta al campo id_clientes de la tabla `clientes`.
 
 El lenguaje **SQL (Structured Query Language)** se utiliza para gestionar bases de datos relacionales.
 
@@ -46,9 +40,7 @@ Cuando desarrollamos aplicaciones que trabajan con información persistente, nec
 
 **1-. Acceso mediante conectores (JDBC - Java Database Connectivity)**
 
-**JDBC** es una API estándar de Java (y compatible con Kotlin) que permite conectarse a una base de datos, enviar instrucciones SQL y procesar los resultados manualmente. Es el método de más bajo nivel, pero ofrece un control total sobre lo que ocurre en la base de datos.
-
-**Características:**  
+**JDBC** es una API estándar de Java (y compatible con Kotlin) que permite conectarse a una base de datos, enviar instrucciones SQL y procesar los resultados manualmente. Es el método de más bajo nivel, pero ofrece un control total sobre lo que ocurre en la base de datos. Es ideal para aprender los fundamentos del acceso a datos y tener control total. Sus principales características son:
 
  - El programador escribe directamente las consultas SQL.
  - Requiere gestionar manualmente conexiones, sentencias y resultados.
@@ -64,17 +56,11 @@ SQLite (embebido)|	org.sqlite.JDBC	|jdbc:sqlite:ruta_al_fichero.db
 
 **2- Acceso mediante ORM (Object-Relational Mapping)**
 
-Un **ORM** es una herramienta que permite trabajar con la base de datos como si fuera un conjunto de objetos, evitando tener que escribir directamente SQL. El **ORM** se encarga de mapear las tablas a clases y los registros a objetos, y traduce automáticamente las operaciones del código a consultas SQL.
-
-**Características:**  
+Un **ORM** es una herramienta que permite trabajar con la base de datos como si fuera un conjunto de objetos, evitando tener que escribir directamente SQL. El **ORM** se encarga de mapear las tablas a clases y los registros a objetos, y traduce automáticamente las operaciones del código a consultas SQL. Es ideal para trabajar de forma más productiva en aplicaciones complejas. Sus principales características son:
 
  - Se trabaja con clases en lugar de tablas SQL.
  - Ahorra mucho código repetitivo.
  - Ideal para proyectos medianos o grandes que requieren mantener muchas entidades.
-
-
-**JPA** (Java Persistence API) es una especificación estándar de Java que define cómo se deben mapear objetos Java (o Kotlin) a tablas de bases de datos relacionales. Es decir, permite gestionar la persistencia de datos de forma orientada a objetos, sin necesidad de escribir SQL directamente. Es el estándar utilizado por las herramientas ORM como Hibernate, EclipseLink, o Spring Data JPA.
-
 
 **Algunos ejemplos de ORMs**
 
@@ -85,13 +71,10 @@ Exposed|	Kotlin|	ORM ligero y expresivo creado por JetBrains
 Spring Data JPA|	Java/Kotlin|	Abstracción que automatiza el acceso a datos
 Room|	Java/Kotlin|	ORM oficial para bases de datos SQLite en Android    
 
+**JPA** (Java Persistence API) es una especificación estándar de Java que define cómo se deben mapear objetos Java (o Kotlin) a tablas de bases de datos relacionales. Es decir, permite gestionar la persistencia de datos de forma orientada a objetos, sin necesidad de escribir SQL directamente. Es el estándar utilizado por las herramientas ORM como Hibernate, EclipseLink, o Spring Data JPA.
 
-**Conclusión**
-
-- JDBC es ideal para aprender los fundamentos del acceso a datos y tener control total.
-- ORM es ideal para trabajar de forma más productiva en aplicaciones complejas.
-
-Ambos métodos son útiles y complementarios: aprender JDBC ayuda a entender mejor lo que hace un ORM por debajo.
+!!! info
+    Aprender JDBC ayuda a entender mejor lo que hace un ORM por debajo.
 
 **Tipos de SGBD relacionales**
 
