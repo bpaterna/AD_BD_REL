@@ -6,7 +6,7 @@ Siguiendo la unidad no solo habrás aprendido los conceptos, sino que tendrás u
 
 Intercaladas con la teoría y con los ejemplos encontrarás tres tipos de cajas. A continuación se explica que es cada una de ellas:
 
-!!! example "Ejecutar y analizar" 
+!!! warning "Ejecutar y analizar" 
     Estas cajas son para analizar y comprender en detalle el ejemplo de código proporcionado. Tu tarea es ejecutar ese código, observar la salida y asegurarte de entender cómo y por qué funciona.
 
 !!! note "Práctica: Aplicar y construir" 
