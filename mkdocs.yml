@@ -6,7 +6,7 @@ theme:
   language: es
   palette:
     scheme: default
-    primary: pink
+    primary: red
   features:
     - navigation.instant
     - navigation.top
