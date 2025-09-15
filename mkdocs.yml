@@ -15,6 +15,7 @@ theme:
     - content.tabs.link
 nav:
   - Inicio: index.md
+  - 1. Introducción: introducción.md
 markdown_extensions:
   - admonition
   - footnotes
