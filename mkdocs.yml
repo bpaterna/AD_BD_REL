@@ -17,6 +17,7 @@ theme:
 nav:
   - Inicio: index.md
   - 1. Introducción: introduccion.md
+  - 2. Conexión a BD: conexiones.md
 markdown_extensions:
   - admonition
   - footnotes
