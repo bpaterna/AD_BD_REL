@@ -9,8 +9,8 @@ Ejemplo de tabla `clientes`:
 
 | id_cliente | nombre   | ciudad     |
 |------------|----------|------------|
-| 1          | Lucía    | Valencia   |
-| 2          | Carlos   | Madrid     |
+| 1          | Pol      | Castellón  |
+| 2          | Eli      | Valencia   |
 
 
 La **Clave primaria (Primary Key)** es una columna (o conjunto de columnas) que **identifica de forma única** cada fila de una tabla. En el ejemplo: `id_cliente` es clave primaria en la tabla `clientes`.
