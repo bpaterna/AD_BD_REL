@@ -18,7 +18,6 @@ nav:
   - 1. Guía de uso: index.md
   - 2. Introducción: introduccion.md
   - 3. Conexión al SGBD: conexiones.md
-  ---
   - DB Browser: DBbrowserSQlite.md
 markdown_extensions:
   - admonition
