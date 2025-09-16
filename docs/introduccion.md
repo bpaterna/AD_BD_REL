@@ -100,4 +100,5 @@ SQLite, H2, Derby...
 
 !!! warning "Práctica 1: Crea tu proyecto y tu base de datos" 
     1. Crea un nuevo proyecto en Kotlin con Gradle.
-    2. A partir del fichero de información utilizado en el proyecto de la unidad anterior, crea una base de datos SQLite con una tabla que contenga la información del fichero.
+    2. A partir del fichero de información utilizado en el proyecto de la unidad anterior, crea una base de datos SQLite **nombre_de_tu_BD.db** con una tabla que contenga la información del fichero.
+    3. Copia el archivo **nombre_de_tu_BD.db** que contiene tu base de datos dentro de la carpeta resources de tu proyecto.
