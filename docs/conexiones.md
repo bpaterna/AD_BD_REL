@@ -23,56 +23,59 @@ Una base de datos puede ser accedida desde diferentes orígenes o herramientas, 
 
 | Medio de conexión                         | Descripción                                                                 |
 |-------------------------------------------|-----------------------------------------------------------------------------|
-| 🖥️ Aplicaciones de escritorio             | Herramientas gráficas como **DBeaver**, **pgAdmin**, **MySQL Workbench**, **DB Browser for SQLite**. Permiten explorar, consultar y administrar BD de forma visual. |
-| 💻 Aplicaciones desarrolladas en código   | Programas en **Kotlin**, **Java**, **Python**, **C#**, etc., mediante **conectores**{.verde} como **JDBC**, **psycopg2**, **ODBC**, etc. para acceder a BD desde código. |
-| 🔠 Línea de comandos                      | Clientes como `psql` (PostgreSQL), `mysql`, `sqlite3`. Permiten ejecutar comandos SQL directamente desde terminal. |
-| 🌐 Aplicaciones web                        | Sitios web que acceden a BD desde el backend (por ejemplo, en Spring Boot, Node.js, Django, etc.). |
-| 🔄 APIs REST o servidores intermedios     | Servicios web que conectan la BD con otras aplicaciones, actuando como puente o capa de seguridad. |
-| 📱 Aplicaciones móviles                   | Apps Android/iOS que acceden a BD locales (como **SQLite**) o remotas (vía **Firebase**, API REST, etc.). |
-| 📂 Herramientas de integración de datos   | Software como **Talend**, **Pentaho**, **Apache Nifi** para migrar, transformar o sincronizar datos entre sistemas. |
+| Aplicaciones de escritorio             | Herramientas gráficas como **DBeaver**, **pgAdmin**, **MySQL Workbench**, **DB Browser for SQLite**. Permiten explorar, consultar y administrar BD de forma visual. |
+| Aplicaciones desarrolladas en código   | Programas en **Kotlin**, **Java**, **Python**, **C#**, etc., mediante **conectores**{.verde} como **JDBC**, **psycopg2**, **ODBC**, etc. para acceder a BD desde código. |
+| Línea de comandos                      | Clientes como `psql` (PostgreSQL), `mysql`, `sqlite3`. Permiten ejecutar comandos SQL directamente desde terminal. |
+| Aplicaciones web                        | Sitios web que acceden a BD desde el backend (por ejemplo, en Spring Boot, Node.js, Django, etc.). |
+| APIs REST o servidores intermedios     | Servicios web que conectan la BD con otras aplicaciones, actuando como puente o capa de seguridad. |
+| Aplicaciones móviles                   | Apps Android/iOS que acceden a BD locales (como **SQLite**) o remotas (vía **Firebase**, API REST, etc.). |
+| Herramientas de integración de datos   | Software como **Talend**, **Pentaho**, **Apache Nifi** para migrar, transformar o sincronizar datos entre sistemas. |
 
 
-!!!Tip ""
-    En los siguientes apartados veremos como conectarnos a una BD Relacional, tanto desde la herramienta gráfica de BD integrada de **IntelliJ**  como desde la herramienta universal para la gestión de bases de datos **DBeaver** y también desde una aplicación desarrollada en **Kotlin**.
+En los siguientes apartados veremos como conectarnos a una BD Relacional, tanto desde la herramienta gráfica de BD integrada de **IntelliJ** como desde la herramienta universal para la gestión de bases de datos **DBeaver** y también desde una aplicación desarrollada en **Kotlin**.
 
 
-## 🔹Desde IntellJ
+## Desde IntellJ
 
 En el desarrollo de aplicaciones, especialmente aquellas que utilizan bases de datos relacionales como PostgreSQL, MySQL o SQLite, es fundamental tener una visión clara y rápida del estado de los datos. Poder visualizar la base de datos directamente desde el entorno de desarrollo (IDE) ofrece una ventaja significativa frente a trabajar con herramientas externas.
 
 **IntelliJ** incorpora una potente herramienta de gestión de bases de datos que permite:
 
 
-- 📂 Explorar la estructura de la base de datos (tablas, vistas, claves, relaciones…)
-- 🔎 Consultar datos en tiempo real con editores SQL integrados
-- 🛠️ Modificar tablas, añadir registros o ejecutar scripts SQL sin salir del proyecto
-- ⚡ Ver los cambios reflejados inmediatamente tras ejecutar una operación desde el código
-- ✅ Probar consultas antes de implementarlas en el programa
+- Explorar la estructura de la base de datos (tablas, vistas, claves, relaciones…).
 
-La siguientes imágenes ilustran como configura esta herramienta para conectarnos a la BD de ejemplo **Tienda.sqlite**, disponible en la sección de recursos de Aules:
+- Consultar datos en tiempo real con editores SQL integrados.
+
+- Modificar tablas, añadir registros o ejecutar scripts SQL sin salir del proyecto.
+
+- Ver los cambios reflejados inmediatamente tras ejecutar una operación desde el código.
+
+- Probar consultas antes de implementarlas en el programa.
+
+La siguientes imágenes ilustran como configura esta herramienta para conectarnos a la BD de ejemplo **Tienda.sqlite**
 
 
-**1. Crea un nuevo proyecto en Kotlin y Gradle**{.azul}
+**1. Crea un nuevo proyecto en Kotlin y Gradle**
 
 Al nuevo proyecto lo llamaremos **BDRelacionales**.
 
 ![ref](img/new_project.png)
 
 
-**2. Copia el archivo de la BD a nuestro proyecto**{.azul}
+**2. Copia el archivo de la BD a nuestro proyecto**
 
 La ubicaremos en la carpeta **resources**. Esta carpeta forma parte del **classpath** del proyecto. Allí se colocan archivos que necesita la aplicación en tiempo de ejecución. Cuando compilas el **proyecto**, todo lo que está en **resources/** se copia dentro del jar o build **final** en la carpeta **classes**, manteniendo la misma estructura. Además, Si compartes el proyecto, la base de datos viaja con él.
 
 ![ref](img/resources_Tienda.png)
 
-**3. Elige el conector a la base de datos**{.azul}
+**3. Elige el conector a la base de datos**
 
 En la herramienta **Database -> Data Source** elegimos el conector **SQLite**. 
 
 ![ref](img/DataSource.png)
 
 
-**4. Selecciona la ubicación de la BD**{.azul}
+**4. Selecciona la ubicación de la BD**
 
 
 Podemos comprobar la conexión en **Test Concection**{.verde} antes de aceptar.  
@@ -80,7 +83,7 @@ Al aceptar, se nos pedirá que instalemos **el driver** correspondiente, si no e
 
 ![ref](img/dialogo_conexion_sqlite.png)
 
-**5. Comprueba consultas antes de implementarlas**{.azul}
+**5. Comprueba consultas antes de implementarlas**
 
 
  Una vez configurado el acceso a la BD podemos ver en diferentes ventanas la estructura de la BD y el resultado de ejecutar las sentencias SQL, haciendo click derecho sobre la conexión y seleccionando la opción `New > QueryConsole`.
