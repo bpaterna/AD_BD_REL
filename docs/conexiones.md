@@ -32,10 +32,11 @@ Una base de datos puede ser accedida desde diferentes orígenes o herramientas, 
 | Herramientas de integración de datos   | Software como **Talend**, **Pentaho**, **Apache Nifi** para migrar, transformar o sincronizar datos entre sistemas. |
 
 
-En los siguientes apartados veremos como conectarnos a una BD Relacional, tanto desde la herramienta gráfica de BD integrada de **IntelliJ** como desde la herramienta universal para la gestión de bases de datos **DBeaver** y también desde una aplicación desarrollada en **Kotlin**.
+!!!Tip ""
+    En los siguientes apartados veremos como conectarnos a una BD Relacional, tanto desde la herramienta gráfica de BD integrada de **IntelliJ** como desde la herramienta universal para la gestión de bases de datos **DBeaver** y también desde una aplicación desarrollada en **Kotlin**.
 
 
-## Desde IntellJ
+## Desde IntellJ versión Ultimate (quitar este apartado)
 
 En el desarrollo de aplicaciones, especialmente aquellas que utilizan bases de datos relacionales como PostgreSQL, MySQL o SQLite, es fundamental tener una visión clara y rápida del estado de los datos. Poder visualizar la base de datos directamente desde el entorno de desarrollo (IDE) ofrece una ventaja significativa frente a trabajar con herramientas externas.
 
@@ -52,23 +53,17 @@ En el desarrollo de aplicaciones, especialmente aquellas que utilizan bases de d
 
 - Probar consultas antes de implementarlas en el programa.
 
-La siguientes imágenes ilustran como configura esta herramienta para conectarnos a la BD de ejemplo **Tienda.sqlite**
+Los siguientes pasos ilustran como configurar esta herramienta para conectarnos a la BD de ejemplo **plantas.db** que ya tenemos copiada a la carpeta **resources** de nuestro proyecto.
+
+![Imagen 1](img/conexiones_01.png)
 
 
-**1. Crea un nuevo proyecto en Kotlin y Gradle**
-
-Al nuevo proyecto lo llamaremos **BDRelacionales**.
-
-![ref](img/new_project.png)
 
 
-**2. Copia el archivo de la BD a nuestro proyecto**
 
-La ubicaremos en la carpeta **resources**. Esta carpeta forma parte del **classpath** del proyecto. Allí se colocan archivos que necesita la aplicación en tiempo de ejecución. Cuando compilas el **proyecto**, todo lo que está en **resources/** se copia dentro del jar o build **final** en la carpeta **classes**, manteniendo la misma estructura. Además, Si compartes el proyecto, la base de datos viaja con él.
 
-![ref](img/resources_Tienda.png)
 
-**3. Elige el conector a la base de datos**
+**1. Elegir el conector a la base de datos**
 
 En la herramienta **Database -> Data Source** elegimos el conector **SQLite**. 
 
