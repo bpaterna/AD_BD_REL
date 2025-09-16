@@ -20,7 +20,7 @@ nav:
     - 1. Guía de uso: index.md
     - 2. Introducción: introduccion.md
     - 3. Conexión al SGBD: conexiones.md
-  - Section: Material adicional
+  - Material adicional:
     - DB Browser: db_browser_sqlite.md
 markdown_extensions:
   - admonition
