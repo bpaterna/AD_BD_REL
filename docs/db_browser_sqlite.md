@@ -40,13 +40,16 @@ A continuación se describen los pasos a seguir para crear una base de datos lla
 **Crear la tabla y los campos**
 
 ![Imagen 3](img/db_browser_sqlite_03.png)
+
 ![Imagen 4](img/db_browser_sqlite_04.png)
 
 ---
 **Añadir información a la tabla**
 
 ![Imagen 5](img/db_browser_sqlite_05.png)
+
 ![Imagen 6](img/db_browser_sqlite_06.png)
+
 ![Imagen 7](img/db_browser_sqlite_07.png)
 
 
