@@ -11,6 +11,7 @@ Para Linux puedes descargar la AppImage que no necesita instalación desde:
 
 
 Una vez descargada, para poder ejecutarla con doble clic, sigue estos pasos:
+
 - Haz clic con el botón derecho y entra en Propiedades.
 
 - Entra en la pestaña Permisos.
