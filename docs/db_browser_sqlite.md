@@ -9,7 +9,9 @@ Para Linux puedes descargar la AppImage que no necesita instalación desde: http
 
 Una vez descargada, para poder ejecutarla con doble clic, sigue estos pasos:
 - Haz clic con el botón derecho y entra en Propiedades.
+
 - Entra en la pestaña Permisos.
+
 - Marca la casilla Permite la ejecución del fichero como programa.
 
 ![Imagen 1](img/db_browser_sqlite_01.png)
@@ -26,17 +28,17 @@ A continuación se describen los pasos a seguir para crear una base de datos lla
 | procedencia | CHAR(3) | Código de país de procedencia. |
 
 
-1. Crear la base de datos
+**Crear la base de datos**
 
 ![Imagen 2](img/db_browser_sqlite_02.png)
 
 
-2. Crear la tabla y los campos
+**Crear la tabla y los campos**
 
 ![Imagen 3](img/db_browser_sqlite_03.png)
 ![Imagen 4](img/db_browser_sqlite_04.png)
 
-3. Añadir información a la tabla
+**Añadir información a la tabla**
 
 ![Imagen 5](img/db_browser_sqlite_05.png)
 ![Imagen 6](img/db_browser_sqlite_06.png)
