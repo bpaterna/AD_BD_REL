@@ -5,10 +5,10 @@ Siguiendo la unidad no solo habrás aprendido los conceptos, sino que tendrás u
 
 Intercaladas con la teoría y con los ejemplos encontrarás tres tipos de cajas. A continuación se explica que es cada una de ellas:
 
-!!! warning "Ejecutar y analizar" 
+!!! success "Ejecutar y analizar" 
     Estas cajas son para analizar y comprender en detalle el ejemplo de código proporcionado. Tu tarea es ejecutar ese código, observar la salida y asegurarte de entender cómo y por qué funciona.
 
-!!! note "Práctica: Aplicar y construir" 
+!!! warning "Práctica: Aplicar y construir" 
     Estas cajas son prácticas que debes realizar tú. Es el momento de ponerte a programar y aplicar lo que acabas de aprender. Son los objetivos que debes completar para avanzar.
     Cada una de estas prácticas es un bloque que debes programar para ir avanzando en tu proyecto final. En cada práctica ampliarás lo de las anteriores. 
 
