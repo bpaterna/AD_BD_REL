@@ -10,5 +10,5 @@ Haz clic con el botón derecho y entra en Propiedades.
 Entra en la pestaña Permisos.
 Marca la casilla Permite la ejecución del fichero como programa.
 
-![img01](img/DBbrowserSQlite.png)
+![img01](img/DBbrowser01.png)
 
