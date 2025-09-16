@@ -97,3 +97,7 @@ SQLite, H2, Derby...
 - Base de datos ligera, sin servidor, ideal para aplicaciones móviles o de escritorio donde no se requiere gestión centralizada.
 - Fácil de configurar y desplegar, ya que la base de datos reside en un archivo local.
 - Casos de uso: aplicaciones de escritorio, móviles, prototipos, pruebas unitarias.
+
+!!! warning "Práctica 1: Crea tu proyecto y tu base de datos" 
+    1. Crea un nuevo proyecto en Kotlin con Gradle.
+    2. A partir del fichero de información utilizado en el proyecto de la unidad anterior, crea una base de datos SQLite con una tabla que contenga la información del fichero.
