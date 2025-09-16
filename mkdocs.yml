@@ -14,6 +14,7 @@ theme:
     - search.suggest
     - content.tabs.link
     - toc.integrate
+    - navigation.sections
 nav:
   - 1. Guía de uso: index.md
   - 2. Introducción: introduccion.md
