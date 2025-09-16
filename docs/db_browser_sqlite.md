@@ -32,21 +32,18 @@ A continuación se describen los pasos a seguir para crear una base de datos lla
 | procedencia | CHAR(3) | Código de país de procedencia. |
 
 
-
-**Crear la base de datos**
 ---
+**Crear la base de datos**
 ![Imagen 2](img/db_browser_sqlite_02.png)
 
-
-**Crear la tabla y los campos**
 ---
+**Crear la tabla y los campos**
 ![Imagen 3](img/db_browser_sqlite_03.png)
 
 ![Imagen 4](img/db_browser_sqlite_04.png)
 
-
-**Añadir información a la tabla**
 ---
+**Añadir información a la tabla**
 ![Imagen 5](img/db_browser_sqlite_05.png)
 
 ![Imagen 6](img/db_browser_sqlite_06.png)
