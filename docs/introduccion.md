@@ -27,8 +27,10 @@ Comandos básicos:
 - `DELETE`: eliminar registros
 - `CREATE`: definir tablas, claves, relaciones, etc.
 
-!!! example "Ejemplo sencillo de consulta"
+!!!Tip ""
+    Ejemplo sencillo de consulta: 
     SELECT nombre FROM clientes WHERE ciudad = 'Valencia';
+
 
 ## Conectores y ORM
 
@@ -72,8 +74,8 @@ Room|	Java/Kotlin|	ORM oficial para bases de datos SQLite en Android
 
 **JPA** (Java Persistence API) es una especificación estándar de Java que define cómo se deben mapear objetos Java (o Kotlin) a tablas de bases de datos relacionales. Es decir, permite gestionar la persistencia de datos de forma orientada a objetos, sin necesidad de escribir SQL directamente. Es el estándar utilizado por las herramientas ORM como Hibernate, EclipseLink, o Spring Data JPA.
 
-!!! info
-    Aprender JDBC ayuda a entender mejor lo que hace un ORM por debajo.
+!!!Tip ""
+    Aprender JDBC ayuda a entender mejor lo que hace un ORM por debajo
 
 ## Tipos de SGBD relacionales
 
