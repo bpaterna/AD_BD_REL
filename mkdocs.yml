@@ -15,9 +15,11 @@ theme:
     - content.tabs.link
     - toc.integrate
 nav:
-  - Inicio: index.md
-  - 1. Introducción: introduccion.md
-  - 2. Conexión al SGBD: conexiones.md
+  - 1. Guía de uso: index.md
+  - 2. Introducción: introduccion.md
+  - 3. Conexión al SGBD: conexiones.md
+  ---
+  - DB Browser: DBbrowserSQlite.md
 markdown_extensions:
   - admonition
   - footnotes
