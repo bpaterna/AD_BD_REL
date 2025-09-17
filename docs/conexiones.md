@@ -33,97 +33,20 @@ Una base de datos puede ser accedida desde diferentes orígenes o herramientas, 
 
 
 !!!Tip ""
-    En los siguientes apartados veremos como conectarnos a una BD Relacional desde la herramienta universal para la gestión de bases de datos **DBeaver** y también desde una aplicación desarrollada en **Kotlin**.
+    A continuación se describe cómo trabajar con BD relacionales desde una aplicación desarrollada en **Kotlin**.
 
 
-## Desde DBeaver    
+Una aplicación (escrita en Kotlin, Java u otro lenguaje) puede leer, insertar o modificar información almacenada en una base de datos relacional (BDR) si previamente se ha conecta conectarse al gestor de base de datos (PostgreSQL, MySQL, SQLite…). Una vez establecida correctamente la conexión podrá:
 
-**DBeaver** es una herramienta gráfica y gratuita que permite gestionar múltiples bases de datos de forma visual. Algunas de las acciones que podemos realizar con esta herramienta son las siguientes:
-
-- Explorar la estructura de la base de datos (tablas, vistas, claves, relaciones…).
-
-- Consultar datos.
-
-- Modificar tablas, añadir registros o ejecutar scripts SQL sin salir del proyecto.
-
-- Probar consultas antes de implementarlas en el programa.
-
-Los siguientes pasos ilustran como configurar esta herramienta para conectarnos a la BD de ejemplo **plantas.db** que ya tenemos copiada a la carpeta **resources** de nuestro proyecto.
-
-![Imagen 1](img/conexiones_01.png)
-
-
-Los pasos para conectarse a la BD  Factura.sqlite, disponible en la sección de recursos de Aules, son los siguientes:
-
-
-**1. Abre DBeaver**{.azul}
-
-Inicia el programa **DBeaver**. Aparecerá la ventana principal con el panel lateral de conexiones.
-
-![ref](img/dbeaver0.jpg)
-
-Haz clic en el botón **"Nueva conexión"** (ícono de enchufe) o ve al menú `Archivo > Nueva conexión`.
-
-![ref](img/dbeaver2.jpg)
-
----
-
-
-**2. Selecciona el tipo de base de datos**{.azul}
-
-En la ventana de selección, elige **SQlite** y pulsa **Siguiente**.
-
-![ref](img/dbeaver3.jpg)
-
-
----
-
-**3. Introduce la ruta donde se encuentra la BD**{.azul}
-
-
-![ref](img/dbeaver4.jpg)
-
-
----
-
-**4. Prueba la conexión**{.azul}
-
-Haz clic en **"Probar conexión"**. Si todo está correcto, verás un mensaje de éxito.  
-Si DBeaver necesita un controlador (driver), te lo ofrecerá para descargar automáticamente.
-
-
-![ref](img/dbeaver5.jpg)
-
-
----
-
-**5. Finaliza y explora**{.azul}
-
-Haz clic en **"Finalizar"**. La nueva conexión aparecerá en el panel lateral izquierdo.  
-Desde allí puedes:
-
-- Ver tablas, vistas, funciones y procedimientos
-- Ejecutar sentencias SQL
-- Consultar y modificar registros
-- Exportar datos en distintos formatos
-
-![ref](img/dbeaver6.jpg)
-
-
-
-## 🔹Desde Kotlin
-
-
-Para que una aplicación (escrita en Kotlin, Java u otro lenguaje) pueda leer, insertar o modificar información almacenada en una base de datos relacional (BDR), debe establecer una conexión con ella. Esto implica una serie de **pasos técnicos** y el uso de componentes específicos:
-
-- Conectarse al gestor de base de datos (PostgreSQL, MySQL, SQLite…)
 - Enviar consultas SQL (SELECT, INSERT, UPDATE, DELETE…)
+
 - Recibir y procesar resultados (ResultSet, listas de objetos…)
+
 - Cerrar correctamente los recursos utilizados
 
 **JDBC** (Java Database Connectivity) es la API básica de Java (conector) para conectarse a bases de datos relacionales.
 
-**Sintaxis:**{.verde}
+**Sintaxis:**
 
     jdbc:<gestor>://<host>:<puerto>/<nombre_base_datos>
 
@@ -145,10 +68,11 @@ Para que la conexión funcione, es necesario **añadir el conector jdbc** corres
         }
 
 
-**Ejemplo de conexión a SQLite**{.azul}
+!!!Tip ""
+    A continuación se describe cómo conectar a una base de datos **SQLite** llamada **plantas.db** que se encuentra en la carpeta **resources** de un proyecto en **Kotlin**.
 
-**Ejemplo_Conexion_SQLite.kt**: El siguiente programa conecta con la BD **Tienda.sqlite** que se encuentra en la carpeta **resources** del proyecto. 
 
+**conexion_SQLite.kt** 
        
         import java.io.File
         import java.sql.DriverManager
@@ -158,45 +82,36 @@ Para que la conexión funcione, es necesario **añadir el conector jdbc** corres
             val dbPath = "src/main/resources/Tienda.sqlite"
             val dbFile = File(dbPath)
             println("Ruta de la BD: ${dbFile.absolutePath}")
-
             val url = "jdbc:sqlite:${dbFile.absolutePath}"
 
             // Conexión y prueba
             DriverManager.getConnection(url).use { conn ->
                 println("Conexión establecida correctamente con SQLite.")
             }
-
-
         }
 
-!!!Note "Recuerda"
+!!!Tip ""
     No se necesita usuario ni contraseña con SQLite, ya que es una base de datos local y embebida.     
 
 
-!!!Tip ""
-    Podemos encapsular la conexión a la base de datos dentro de un objeto, de manera que pueda reutilizarse tantas veces como sea necesario. Así evitamos duplicar código y reducimos posibles errores. Por ejemplo, si la base de datos cambia de ubicación, solo habría que actualizar la ruta en el objeto y no en cada uno de los programas.
+Podemos encapsular la conexión a la base de datos dentro de un objeto para reutilizarla tantas veces como sea necesario. Así evitamos duplicar código y reducimos posibles errores. Por ejemplo, si la base de datos cambia de ubicación, solo habría que actualizar la ruta en el objeto y no en cada uno de los programas.
 
-**Ejemplo_Conexion_SQLite_obj.kt**
-
+**conexion_SQLite_obj.kt**
        
         import java.io.File
         import java.sql.DriverManager
 
-        object DatabaseTienda {
-
-
+        object DatabasePlantas {
             // Ruta al archivo de base de datos SQLite
-            val dbPath = "src/main/resources/Tienda.sqlite"
+            val dbPath = "src/main/resources/plantas.db"
             val dbFile = File(dbPath)
             val url = "jdbc:sqlite:${dbFile.absolutePath}"
 
             fun getConnection() = DriverManager.getConnection(url)
-
         }
 
-**Ejemplo_basico_conexion_objeto.kt**
+**conexion_objeto.kt**
 
-           
             import java.io.File
             import java.sql.DriverManager
             import kotlin.use
@@ -209,30 +124,11 @@ Para que la conexión funcione, es necesario **añadir el conector jdbc** corres
 
                             while (rs.next()) {
 
-                                //código
+                                //aquí iría el código
                             }
                         }
                     }
                 }
             }
 
-
-
-<!--
-**Ejemplo de conexión a Postgresql**
-
-        import java.sql.DriverManager
-
-        
-        fun main() {
-            // Ruta al archivo de base de datos Postgres
-            val url = "jdbc:postgresql://localhost:5432/empresa"
-            val user = "postgres"
-            val pass = "admin"
-
-            // Conexión y prueba
-            DriverManager.getConnection(url, user, pass).use { conn ->
-                println("Conexión establecida correctamente.")
-            }        
-        }
--->        
+      
