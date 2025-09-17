@@ -33,23 +33,18 @@ Una base de datos puede ser accedida desde diferentes orígenes o herramientas, 
 
 
 !!!Tip ""
-    En los siguientes apartados veremos como conectarnos a una BD Relacional, tanto desde la herramienta gráfica de BD integrada de **IntelliJ** como desde la herramienta universal para la gestión de bases de datos **DBeaver** y también desde una aplicación desarrollada en **Kotlin**.
+    En los siguientes apartados veremos como conectarnos a una BD Relacional desde la herramienta universal para la gestión de bases de datos **DBeaver** y también desde una aplicación desarrollada en **Kotlin**.
 
 
-## Desde IntellJ versión Ultimate (quitar este apartado)
+## Desde DBeaver    
 
-En el desarrollo de aplicaciones, especialmente aquellas que utilizan bases de datos relacionales como PostgreSQL, MySQL o SQLite, es fundamental tener una visión clara y rápida del estado de los datos. Poder visualizar la base de datos directamente desde el entorno de desarrollo (IDE) ofrece una ventaja significativa frente a trabajar con herramientas externas.
-
-**IntelliJ** incorpora una potente herramienta de gestión de bases de datos que permite:
-
+**DBeaver** es una herramienta gráfica y gratuita que permite gestionar múltiples bases de datos de forma visual. Algunas de las acciones que podemos realizar con esta herramienta son las siguientes:
 
 - Explorar la estructura de la base de datos (tablas, vistas, claves, relaciones…).
 
-- Consultar datos en tiempo real con editores SQL integrados.
+- Consultar datos.
 
 - Modificar tablas, añadir registros o ejecutar scripts SQL sin salir del proyecto.
-
-- Ver los cambios reflejados inmediatamente tras ejecutar una operación desde el código.
 
 - Probar consultas antes de implementarlas en el programa.
 
@@ -58,43 +53,7 @@ Los siguientes pasos ilustran como configurar esta herramienta para conectarnos 
 ![Imagen 1](img/conexiones_01.png)
 
 
-
-
-
-
-
-**1. Elegir el conector a la base de datos**
-
-En la herramienta **Database -> Data Source** elegimos el conector **SQLite**. 
-
-![ref](img/DataSource.png)
-
-
-**4. Selecciona la ubicación de la BD**
-
-
-Podemos comprobar la conexión en **Test Concection**{.verde} antes de aceptar.  
-Al aceptar, se nos pedirá que instalemos **el driver** correspondiente, si no estuviera instalado.
-
-![ref](img/dialogo_conexion_sqlite.png)
-
-**5. Comprueba consultas antes de implementarlas**
-
-
- Una vez configurado el acceso a la BD podemos ver en diferentes ventanas la estructura de la BD y el resultado de ejecutar las sentencias SQL, haciendo click derecho sobre la conexión y seleccionando la opción `New > QueryConsole`.
-
-![ref](img/query_consola.png)
-
-![ref](img/consola_sql.png)
-
-
-
-
-
-## 🔹Desde DBeaver    
-
-
-**DBeaver** es una herramienta gráfica y gratuita que permite gestionar múltiples bases de datos de forma visual. Los pasos para conectarse a la BD  Factura.sqlite, disponible en la sección de recursos de Aules, son los siguientes:
+Los pasos para conectarse a la BD  Factura.sqlite, disponible en la sección de recursos de Aules, son los siguientes:
 
 
 **1. Abre DBeaver**{.azul}
