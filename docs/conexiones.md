@@ -60,17 +60,16 @@ SQLite|	jdbc:sqlite:empresa.sqlite
 Para que la conexión funcione, es necesario **añadir el conector jdbc** correspondiente. Para ello utilizaremos la herramienta **Gradle**, que permite automatizar la gestión de dependencias sin tener que configurar nada a mano.
 
 **build.gradle.kts** : 
-
-        dependencies {
-            implementation("org.postgresql:postgresql:42.7.1") //Postgres
-            implementation("mysql:mysql-connector-java:8.3.0") //MySQL
-            implementation("org.xerial:sqlite-jdbc:3.43.0.0") //SQLite
-        }
-
+```
+dependencies {
+    implementation("org.postgresql:postgresql:42.7.1") //Postgres
+    implementation("mysql:mysql-connector-java:8.3.0") //MySQL
+    implementation("org.xerial:sqlite-jdbc:3.43.0.0") //SQLite
+}
+```
 
 !!!Tip ""
     A continuación se describe cómo conectar a una base de datos **SQLite** llamada **plantas.db** que se encuentra en la carpeta **resources** de un proyecto en **Kotlin**.
-
 
 **conexion_SQLite.kt** 
 
@@ -94,7 +93,6 @@ import java.sql.DriverManager
 
 !!!Tip ""
     No se necesita usuario ni contraseña con SQLite, ya que es una base de datos local y embebida.     
-
 
 Podemos encapsular la conexión a la base de datos dentro de un objeto para reutilizarla tantas veces como sea necesario. Así evitamos duplicar código y reducimos posibles errores. Por ejemplo, si la base de datos cambia de ubicación, solo habría que actualizar la ruta en el objeto y no en cada uno de los programas.
 
