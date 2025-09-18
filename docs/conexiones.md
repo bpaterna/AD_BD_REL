@@ -59,7 +59,7 @@ SQLite|	jdbc:sqlite:empresa.sqlite
 
 Para que la conexión funcione, es necesario **añadir el conector jdbc** correspondiente. Para ello utilizaremos la herramienta **Gradle**, que permite automatizar la gestión de dependencias sin tener que configurar nada a mano.
 
-- **build.gradle.kts** : 
+**build.gradle.kts** : 
 
         dependencies {
             implementation("org.postgresql:postgresql:42.7.1") //Postgres
@@ -73,22 +73,24 @@ Para que la conexión funcione, es necesario **añadir el conector jdbc** corres
 
 
 **conexion_SQLite.kt** 
-       
-        import java.io.File
-        import java.sql.DriverManager
 
-        fun main() {
-            // Ruta al archivo de base de datos SQLite
-            val dbPath = "src/main/resources/Tienda.sqlite"
-            val dbFile = File(dbPath)
-            println("Ruta de la BD: ${dbFile.absolutePath}")
-            val url = "jdbc:sqlite:${dbFile.absolutePath}"
+``` kotlin
+import java.io.File
+import java.sql.DriverManager
 
-            // Conexión y prueba
-            DriverManager.getConnection(url).use { conn ->
-                println("Conexión establecida correctamente con SQLite.")
-            }
+    fun main() {
+        // Ruta al archivo de base de datos SQLite
+        val dbPath = "src/main/resources/Tienda.sqlite"
+        val dbFile = File(dbPath)
+        println("Ruta de la BD: ${dbFile.absolutePath}")
+        val url = "jdbc:sqlite:${dbFile.absolutePath}"
+
+        // Conexión y prueba
+        DriverManager.getConnection(url).use { conn ->
+            println("Conexión establecida correctamente con SQLite.")
         }
+    }
+```
 
 !!!Tip ""
     No se necesita usuario ni contraseña con SQLite, ya que es una base de datos local y embebida.     
@@ -97,38 +99,39 @@ Para que la conexión funcione, es necesario **añadir el conector jdbc** corres
 Podemos encapsular la conexión a la base de datos dentro de un objeto para reutilizarla tantas veces como sea necesario. Así evitamos duplicar código y reducimos posibles errores. Por ejemplo, si la base de datos cambia de ubicación, solo habría que actualizar la ruta en el objeto y no en cada uno de los programas.
 
 **conexion_SQLite_obj.kt**
-       
-        import java.io.File
-        import java.sql.DriverManager
+``` kotlin
+import java.io.File
+import java.sql.DriverManager
 
-        object DatabasePlantas {
-            // Ruta al archivo de base de datos SQLite
-            val dbPath = "src/main/resources/plantas.db"
-            val dbFile = File(dbPath)
-            val url = "jdbc:sqlite:${dbFile.absolutePath}"
+object DatabasePlantas {
+    // Ruta al archivo de base de datos SQLite
+    val dbPath = "src/main/resources/plantas.db"
+    val dbFile = File(dbPath)
+    val url = "jdbc:sqlite:${dbFile.absolutePath}"
 
-            fun getConnection() = DriverManager.getConnection(url)
-        }
+    fun getConnection() = DriverManager.getConnection(url)
+}
+```
 
 **conexion_objeto.kt**
+``` kotlin
+import java.io.File
+import java.sql.DriverManager
+import kotlin.use
 
-            import java.io.File
-            import java.sql.DriverManager
-            import kotlin.use
+fun main() {
+    val sql = "SELECT * FROM article"
+    DatabaseTienda.getConnection().use { conn ->
+        conn.prepareStatement(sql).use { stmt ->
+            stmt.executeQuery().use { rs ->
 
-            fun main() {
-                val sql = "SELECT * FROM article"
-                DatabaseTienda.getConnection().use { conn ->
-                    conn.prepareStatement(sql).use { stmt ->
-                        stmt.executeQuery().use { rs ->
+                while (rs.next()) {
 
-                            while (rs.next()) {
-
-                                //aquí iría el código
-                            }
-                        }
-                    }
+                    //aquí iría el código
                 }
             }
-
+        }
+    }
+}
+```
       
