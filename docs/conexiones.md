@@ -90,20 +90,48 @@ import java.sql.DriverManager
 !!!Tip ""
     No se necesita usuario ni contraseña con SQLite, ya que es una base de datos local y embebida.     
 
-Podemos encapsular la conexión a la base de datos dentro de un objeto para reutilizarla tantas veces como sea necesario. Así evitamos duplicar código y reducimos posibles errores. Por ejemplo, si la base de datos cambia de ubicación, solo habría que actualizar la ruta en el objeto y no en cada uno de los programas.
+Podemos tener un fichero encapsular la conexión a la base de datos dentro de un objeto para reutilizarla tantas veces como sea necesario. Así evitamos duplicar código y reducimos posibles errores. Por ejemplo, si la base de datos cambia de ubicación, solo habría que actualizar la ruta en el objeto y no en cada uno de los programas.
 
-**conexion_SQLite_obj.kt**
+**BD.kt**
 ``` kotlin
 import java.io.File
+import java.sql.Connection
 import java.sql.DriverManager
+import java.sql.SQLException
 
-object DatabasePlantas {
+object DatabaseObj {
     // Ruta al archivo de base de datos SQLite
-    val dbPath = "src/main/resources/plantas.db"
-    val dbFile = File(dbPath)
-    val url = "jdbc:sqlite:${dbFile.absolutePath}"
+    private val dbPath = "datos/plantas.sqlite"
+    private val dbFile = File(dbPath)
+    private val url = "jdbc:sqlite:${dbFile.absolutePath}"
 
-    fun getConnection() = DriverManager.getConnection(url)
+    // Obtener conexión
+    fun getConnection(): Connection? {
+        return try {
+            DriverManager.getConnection(url)
+        } catch (e: SQLException) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    // Función de prueba: verificar conexión
+    fun testConnection(): Boolean {
+        return getConnection()?.use { conn ->
+            println("Conexión establecida con éxito a ${dbFile.absolutePath}")
+            true
+        } ?: false
+    }
+
+    // Cerrar conexión
+    fun closeConnection(conn: Connection?) {
+        try {
+            conn?.close()
+            println("Conexión cerrada correctamente.")
+        } catch (e: SQLException) {
+            println("Error al cerrar la conexión: ${e.message}")
+        }
+    }
 }
 ```
 
