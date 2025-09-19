@@ -6,10 +6,6 @@ De todas las formas posibles de interactuar con una base de datos, nos vamos a c
 
 En la introducción ya vimos que un **conector** (también llamado driver) es una librería software que permite que una aplicación se comunique con un gestor de base de datos (SGBD). Actúa como un puente entre nuestro código y la base de datos, traduciendo las instrucciones SQL a un lenguaje que el gestor puede entender y viceversa. Sin un conector, tu aplicación no podría comunicarse con la base de datos.
 
-- En herramientas gráficas como **DBeaver**, los drivers se gestionan automáticamente.
-- En **proyectos en código**, se añaden como dependencia (por ejemplo, en Maven, Gradle, pip…).
-
-
 Una base de datos puede ser accedida desde diferentes orígenes o herramientas, siempre que tengamos:
 
 - Las credenciales de acceso (usuario y contraseña)
