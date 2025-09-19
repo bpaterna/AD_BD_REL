@@ -8,13 +8,14 @@ theme:
     scheme: default
     primary: red
   features:
+    - content.code.copy
+    - content.tabs.link
     - navigation.instant
     - navigation.top
+    - navigation.sections
     - search.highlight
     - search.suggest
-    - content.tabs.link
     - toc.integrate
-    - navigation.sections
 nav:
   - Contenido:
     - 1. Guía de uso: index.md
