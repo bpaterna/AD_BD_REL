@@ -2,9 +2,9 @@
 
 En **JDBC** (Java Database Connectivity), las operaciones sobre la base de datos se realizan  utilizando los siguientes objetos y métodos:
 
-1. **Connection**, establece el canal de comunicación con el SGBD (PostgreSQL, MySQL, etc.)
+- **Connection**, establece el canal de comunicación con el SGBD (PostgreSQL, MySQL, etc.)
 
-2. Los objetos **PreparedStatement** y **CreateStatement** se utlizan para enviar consultas SQL desde el programa a la base de datos. A continuación se muestra una tabla con el uso de cada uno:
+- Los objetos **PreparedStatement** y **CreateStatement** se utlizan para enviar consultas SQL desde el programa a la base de datos. A continuación se muestra una tabla con el uso de cada uno:
 
 
 | Si necesitas...                                     | Usa...            |
@@ -16,7 +16,7 @@ En **JDBC** (Java Database Connectivity), las operaciones sobre la base de datos
 | Crear tablas o sentencias SQL complejas que no cambian | `CreateStatement`
 
 
-3. Los métodos **executeQuery()**, **executeUpdate()** y **execute()** se utilizan para ejecutar sentencias SQL, pero se usan en contextos diferentes. A continuación se muestra una tabla con el uso de cada uno:
+- Los métodos **executeQuery()**, **executeUpdate()** y **execute()** se utilizan para ejecutar sentencias SQL, pero se usan en contextos diferentes. A continuación se muestra una tabla con el uso de cada uno:
 
 
 Método|	Uso principal|	Tipo de sentencia SQL|	Resultado que devuelve
@@ -30,81 +30,110 @@ Método|	Uso principal|	Tipo de sentencia SQL|	Resultado que devuelve
 
 <span class="mi_h2">Ejemplos en SQlite</span>
 
+Los siguientes ejemplos se han realizado sobre la tabla `plantas`de la BD `plantas.sqlite`
 
-**Consulta sin parámetros**
+**Ejemplo 1: Consulta sin parámetros** El siguiente ejemplo consulta toda la infromación de las plantas y la mustra por consola de forma ordenada:
 
-El siguiente ejemplo muestra consultar la información de la tabla employees, recorrer el resultado de la consulta y mostrar la información por consola.
+``` kotlin
+fun consultarPlantas() {
+    val conn = BD.getConnection()
+    if (conn != null) {
+        val sql = "SELECT * FROM plantas"
+        conn.prepareStatement(sql).use { stmt ->
 
-String sql = "SELECT * FROM employees";
+            stmt.executeQuery().use { rs ->
+                println("Plantas encontradas:")
 
+                while (rs.next()) {
+                    val idPlanta = rs.getString("id")
+                    val nombreComun = rs.getString("nombre_comun")
+                    val nombreCientifico = rs.getString("nombre_cientifico")
+                    val frecuenciaRiego = rs.getInt("frecuencia_riego")
+                    val altura = rs.getDouble("altura")
 
-
-**Consulta con parámetros**
-
-String sql = "SELECT * FROM employees WHERE id = ?";
-
-
-
-**Sentencias INSERT**
-
-Las sentencias **INSERT** permiten añadir nuevos registros a una tabla.
-
-
-**Ejemplo_Insert.kt**: Este fragmento añade un nuevo articulo "00001" a la tabla articles
-
-    package SQLite
-    import java.sql.DriverManager
-
-    fun main() {
-        val dbPath = "src/main/resources/Tienda.sqlite"
-        val dbFile = java.io.File(dbPath)
-        val url = "jdbc:sqlite:${dbFile.absolutePath}"
-
-        DriverManager.getConnection(url).use { conn ->
-
-            val sql = "INSERT INTO article (cod_a, descrip) VALUES (?, ?)"
-            //conn.prepareStatement(sql)
-
-            conn.prepareStatement(sql).use { stmt ->
-
-                stmt.setString(1, "00004")
-                stmt.setString(2, "articulo de prueba 1")
-                stmt.executeUpdate()
-
-
-            }
-
-            }
-        }
-
-**Sentencias UPDATE**
-
-Las sentencias **UPDATE** permiten modificar los valores de uno o varios registros existentes.
-
-
-
-**Ejemplo_Update.kt**: Este código actualiza la descripción del artículo "00001"
-
-        package SQLite
-        import java.sql.DriverManager
-
-        fun main() {
-            val dbPath = "src/main/resources/Tienda.sqlite"
-            val dbFile = java.io.File(dbPath)
-            val url = "jdbc:sqlite:${dbFile.absolutePath}"
-
-            DriverManager.getConnection(url).use { conn ->
-
-                val sql = "UPDATE article SET descrip = ? WHERE cod_a = ?"
-
-                conn.prepareStatement(sql).use { stmt ->
-                    stmt.setString(1, "descripción nueva")
-                    stmt.setString(2, "00001")
-                    stmt.executeUpdate()
-
+                    println("- $idPlanta: $nombreComun ($nombreCientifico). Frecuencia de riego: $frecuenciaRiego, altura: $altura")
                 }
             }
         }
+        BD.closeConnection(conn)
+    }
+}
+```
+
+
+**Ejemplo 2: Consulta con parámetros** El siguiente ejemplo consulta la infromación de la planta cuyo ID coincide con uno proporcionado por el usuario:
+``` kotlin
+
+``` 
+
+
+
+
+
+
+**Ejemplo 3: INSERT** El siguiente ejemplo añade un registro a la tabla de la BD.
+
+``` kotlin
+fun insertarPlanta() {
+    val conn = BD.getConnection()
+    if (conn != null) {
+        //datos a insertar
+        val nombreComun = "Palmera"
+        val nombreCientifico = "Arecaceae"
+        val frecuenciaRiego = 2
+        val altura = 8.5
+
+        val sql = "INSERT INTO plantas (nombre_comun, nombre_cientifico, frecuencia_riego, altura) VALUES (?, ?, ?, ?)"
+
+        conn.prepareStatement(sql).use { stmt ->
+            stmt.setString(1, nombreComun)
+            stmt.setString(2, nombreCientifico)
+            stmt.setInt(3, frecuenciaRiego)
+            stmt.setDouble(4, altura)
+            stmt.executeUpdate()
+        }
+        BD.closeConnection(conn)
+        println("Planta insertada correctamente")
+    }
+}
+``` 
+
+
+
+**Ejemplo 4: UPDATE**  El siguiente ejemplo actualiza la `altura` de una planta identificada por su `id` (el id de la planta a actualizar y la nueva altura se piden por teclado al usuario).
+
+``` kotlin
+fun actualizaPlanta() {
+    var idPlanta = 0
+    var nuevaAltura = 0.0
+
+    print("Introduce un ID: ")
+    val pideID = readLine()
+    if (pideID != null && pideID.isNotBlank()) {
+        idPlanta = pideID.toInt()
+
+        print("Introduce la nueva altura: ")
+        val pideAltura = readLine()
+        if (pideAltura != null && pideAltura.isNotBlank()) {
+            nuevaAltura = pideAltura.toDouble()
+        }
+    }
+
+    val conn = BD.getConnection()
+    if (conn != null) {
+        val sql = "UPDATE plantas SET altura = ? WHERE id = ?"
+
+        conn.prepareStatement(sql).use { stmt ->
+            stmt.setDouble(1, nuevaAltura)
+            stmt.setInt(2, idPlanta)
+
+            stmt.executeUpdate()
+        }
+        BD.closeConnection(conn)
+        println("Planta actualizada correctamente")
+    }
+}
+```
 
 
 
