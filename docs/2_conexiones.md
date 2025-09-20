@@ -175,7 +175,7 @@ object BD {
 }
 ```
 
-De esta forma, cuando el programa necesite acceder a la BD llamará a la función de conexión y cuando termine llamará a la fución que cierra la conexión. Un ejemplo de estas llamadas podría ser:
+De esta forma, cuando el programa necesite acceder a la BD llamará a la función de conexión y cuando termine llamará a la función que cierra la conexión. Un ejemplo de estas llamadas podría ser:
 
 ``` kotlin
 fun main() {
