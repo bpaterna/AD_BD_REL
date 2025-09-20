@@ -87,7 +87,7 @@ dependencies {
 }
 ```
 
-## Conexión a SQLite
+<span class="mi_h2">Conexión a SQLite</span>
 
 A continuación se describe cómo conectar a una base de datos **SQLite** llamada **plantas.sqlite** que se encuentra en la carpeta **datos** dentro de un proyecto en **Kotlin**.
 
