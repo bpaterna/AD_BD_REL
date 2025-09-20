@@ -53,7 +53,7 @@ Si no utilizas **use {}** en Kotlin (o try-with-resources en Java), entonces deb
 
 <span class="mi_h2">Ejemplos en SQlite</span>
 
-Los siguientes ejemplos se han realizado sobre la tabla `plantas`de la BD `plantas.sqlite` y se ha utilizado las funciones de conexión y desconexión programadas anteriormente en un objeto en un archivo **.kt** separado.
+Los siguientes ejemplos se han realizado sobre la tabla `plantas`de la BD `plantas.sqlite` y se han utilizado las funciones de conexión y desconexión programadas anteriormente en un objeto en un archivo **.kt** separado.
 
 
 **Ejemplo 1 - Consulta sin parámetros:** El siguiente ejemplo consulta toda la información de las plantas y la muestra por consola.
@@ -80,7 +80,7 @@ fun consultarPlantas() {
                 }
             }
         } catch (e: Exception) {
-            println("Error al consultar plantas: ${e.message}")
+            println("Error: ${e.message}")
         } finally {
             BD.closeConnection(conn)
         }
@@ -97,7 +97,7 @@ fun consultarPlantas() {
     Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
-**Ejemplo 2 - Consulta con parámetros:** El siguiente ejemplo consulta la infromación de la planta cuyo ID coincide con el pasado como parámetro.
+**Ejemplo 2 - Consulta con parámetros:** El siguiente ejemplo consulta la información de la planta cuyo ID coincide con el pasado como parámetro.
 
 ``` kotlin
 fun consultarPlantaPorId(id: Int) {
@@ -124,7 +124,7 @@ fun consultarPlantaPorId(id: Int) {
                 }
             }
         } catch (e: Exception) {
-            println("Error al consultar planta: ${e.message}")
+            println("Error: ${e.message}")
         } finally {
             BD.closeConnection(conn)
         }
@@ -147,7 +147,7 @@ fun consultarPlantaPorId(id: Int) {
 fun insertarPlanta() {
     val conn = BD.getConnection()
     if (conn != null) {
-        //datos a insertar
+        //datos de ejemplo a insertar
         val nombreComun = "Palmera"
         val nombreCientifico = "Arecaceae"
         val frecuenciaRiego = 2
@@ -163,7 +163,7 @@ fun insertarPlanta() {
                 stmt.executeUpdate()
             }
         } catch (e: Exception) {
-            println("Error al consultar planta: ${e.message}")
+            println("Error: ${e.message}")
         } finally {
             println("Planta insertada correctamente")
             BD.closeConnection(conn)
@@ -181,7 +181,7 @@ fun insertarPlanta() {
     Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
-**Ejemplo 4 - UPDATE:**  El siguiente ejemplo actualiza la `altura` de una planta identificada por su `id` (el id de la planta a actualizar y la nueva altura se piden por consola).
+**Ejemplo 4 - UPDATE:**  El siguiente ejemplo actualiza la `altura` de una planta identificada por su `id` (el id de la planta a actualizar y la nueva altura se piden por consola antes de llamar a la función).
 
 ``` kotlin
 fun actualizarPlanta(id: Int, altura: Double) {
@@ -196,7 +196,7 @@ fun actualizarPlanta(id: Int, altura: Double) {
                 stmt.executeUpdate()
             }
         } catch (e: Exception) {
-            println("Error al consultar planta: ${e.message}")
+            println("Error: ${e.message}")
         } finally {
             println("Planta actualizada correctamente")
             BD.closeConnection(conn)
@@ -227,7 +227,7 @@ fun eliminarPlanta(id: Int) {
                 stmt.executeUpdate()
             }
         } catch (e: Exception) {
-            println("Error al consultar planta: ${e.message}")
+            println("Error: ${e.message}")
         } finally {
             println("Planta eliminada correctamente")
             BD.closeConnection(conn)
