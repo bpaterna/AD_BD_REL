@@ -30,6 +30,8 @@ El lenguaje **SQL (Structured Query Language)** se utiliza para gestionar bases 
 - `DELETE`: eliminar registros
 - `CREATE`: definir tablas, claves, relaciones, etc.
 
+Es lo que se denomina **CRUD**, es decir, **C**reate (crear), **R**ead (Leer), **U**pdate (Actualizar) y **D**elete (Borrar). 
+
 Un ejemplo sencillo de consulta podría ser:
 
     SELECT nombre FROM clientes WHERE ciudad = 'Valencia';
