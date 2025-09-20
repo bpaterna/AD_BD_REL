@@ -42,6 +42,3 @@ plugins:
       output_path: pdf/AD_BD_REL.pdf
       cover: true
       toc_title: "Índice"
-  - to-pdf:
-      output_path: pdf/AD_BD_REL2.pdf
-      cover-title: Hola, esto es una prueba
