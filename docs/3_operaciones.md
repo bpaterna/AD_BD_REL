@@ -84,7 +84,7 @@ fun consultarPlantas() {
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
 
-!!! warning "Práctica 3: Conecta a tu base de datos" 
+!!! warning "Práctica 4: Conecta a tu base de datos" 
     Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
@@ -96,7 +96,7 @@ fun consultarPlantas() {
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
 
-!!! warning "Práctica 4: Conecta a tu base de datos" 
+!!! warning "Práctica 5: Conecta a tu base de datos" 
     Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
@@ -130,7 +130,7 @@ fun insertarPlanta() {
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
 
-!!! warning "Práctica 5: Conecta a tu base de datos" 
+!!! warning "Práctica 6: Conecta a tu base de datos" 
     Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
@@ -171,7 +171,7 @@ fun actualizarPlanta() {
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
 
-!!! warning "Práctica 6: Conecta a tu base de datos" 
+!!! warning "Práctica 7: Conecta a tu base de datos" 
     Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
@@ -201,7 +201,7 @@ fun eliminarPlanta() {
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
 
-!!! warning "Práctica 7: Conecta a tu base de datos" 
+!!! warning "Práctica 8: Conecta a tu base de datos" 
     Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
@@ -260,7 +260,7 @@ FALTA a PARTIR DE AQUÍ
 
 
 
-**Ejemplos**{.azul} para cerrar recursos abiertos sin **use()**, de forma manual y con el bloque **try-catch-finally**
+**Ejemplos** para cerrar recursos abiertos sin **use()**, de forma manual y con el bloque **try-catch-finally**
 
 **Ejemplo_cierre_manual.kt:** Cierra los recurso con close()
 
