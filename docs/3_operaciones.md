@@ -27,6 +27,9 @@ Método|	Uso principal|	Tipo de sentencia SQL|	Resultado que devuelve
 
 
 ---
+
+<span class="mi_h2">Buenas prácticas</span>
+
 **Liberación de recursos**
 
 Cuando una aplicación accede a una base de datos, abre varios recursos internos que consumen memoria y conexiones activas en el sistema:
@@ -46,6 +49,7 @@ En Kotlin, puedes usar **use {}** para cerrar recursos automáticamente al final
 
 
 Si no utilizas **use {}** en Kotlin (o try-with-resources en Java), entonces debes cerrar manualmente cada uno de los recursos abiertos (ResultSet, Statement y Connection) usando .**close()**, y normalmente deberías hacerlo dentro de un bloque **finally** para garantizar su cierre incluso si ocurre un error. El orden correcto de cierre es del más interno al más externo.
+
 
 
 <span class="mi_h2">Ejemplos en SQlite</span>
@@ -88,9 +92,41 @@ fun consultarPlantas() {
     Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
-**Ejemplo 2 - Consulta con parámetros:** El siguiente ejemplo consulta la infromación de la planta cuyo ID coincide con uno proporcionado por el usuario:
-``` kotlin
+**Ejemplo 2 - Consulta con parámetros:** El siguiente ejemplo consulta la infromación de la planta cuyo ID coincide con el pasado como parámetro:
 
+``` kotlin
+fun consultarPlantaPorId(id: Int) {
+    val conn = BD.getConnection()
+    if (conn != null) {
+        val sql = "SELECT * FROM plantas WHERE id = ?"
+        try {
+            conn.prepareStatement(sql).use { stmt ->
+                stmt.setInt(1, id)
+
+                stmt.executeQuery().use { rs ->
+                    if (rs.next()) {
+                        val idPlanta = rs.getInt("id")
+                        val nombreComun = rs.getString("nombre_comun")
+                        val nombreCientifico = rs.getString("nombre_cientifico")
+                        val frecuenciaRiego = rs.getInt("frecuencia_riego")
+                        val altura = rs.getDouble("altura")
+
+                        println("Planta encontrada:")
+                        println("- $idPlanta: $nombreComun ($nombreCientifico). Frecuencia de riego: $frecuenciaRiego días, altura: $altura m")
+                    } else {
+                        println("No se encontró ninguna planta con id=$id")
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            println("Error al consultar planta: ${e.message}")
+        } finally {
+            BD.closeConnection(conn)
+        }
+    } else {
+        println("No se pudo establecer la conexión a la base de datos.")
+    }
+}
 ``` 
 
 !!! success "Realiza lo siguiente" 
