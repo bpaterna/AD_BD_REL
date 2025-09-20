@@ -13,4 +13,4 @@ Intercaladas con la teoría y con los ejemplos encontrarás tres tipos de cajas.
     Cada una de estas prácticas es un bloque que debes programar para ir avanzando en tu proyecto final. En cada práctica ampliarás lo de las anteriores. 
 
 !!! danger "Entrega" 
-    Estas cajas son entregas de tu trabajo. Las entregas pueden ser parciales (la profesora te dará sugerencias de mejora) o finales (la profesora calificará el trabajo que has realizado). No todas las prácticas llevan asociada una entrega).
+    Estas cajas son entregas de tu trabajo. Las entregas pueden ser parciales (la profesora te dará sugerencias de mejora) o finales (la profesora calificará el trabajo que has realizado). No todas las prácticas llevan asociada una entrega.
