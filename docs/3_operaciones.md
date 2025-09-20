@@ -30,7 +30,7 @@ Método|	Uso principal|	Tipo de sentencia SQL|	Resultado que devuelve
 
 <span class="mi_h2">Ejemplos en SQlite</span>
 
-Los siguientes ejemplos se han realizado sobre la tabla `plantas`de la BD `plantas.sqlite`
+Los siguientes ejemplos se han realizado sobre la tabla `plantas`de la BD `plantas.sqlite` y se ha utilizado las funciones de conexión y desconexión programadas anteriormente en un objeto en un archivo **.kt** separado
 
 **Ejemplo 1: Consulta sin parámetros** El siguiente ejemplo consulta toda la infromación de las plantas y la mustra por consola de forma ordenada:
 
@@ -69,8 +69,6 @@ fun consultarPlantas() {
 
 
 
-
-
 **Ejemplo 3: INSERT** El siguiente ejemplo añade un registro a la tabla de la BD.
 
 ``` kotlin
@@ -100,10 +98,10 @@ fun insertarPlanta() {
 
 
 
-**Ejemplo 4: UPDATE**  El siguiente ejemplo actualiza la `altura` de una planta identificada por su `id` (el id de la planta a actualizar y la nueva altura se piden por teclado al usuario).
+**Ejemplo 4: UPDATE**  El siguiente ejemplo actualiza la `altura` de una planta identificada por su `id` (el id de la planta a actualizar y la nueva altura se piden por consola).
 
 ``` kotlin
-fun actualizaPlanta() {
+fun actualizarPlanta() {
     var idPlanta = 0
     var nuevaAltura = 0.0
 
@@ -126,7 +124,6 @@ fun actualizaPlanta() {
         conn.prepareStatement(sql).use { stmt ->
             stmt.setDouble(1, nuevaAltura)
             stmt.setInt(2, idPlanta)
-
             stmt.executeUpdate()
         }
         BD.closeConnection(conn)
@@ -136,34 +133,30 @@ fun actualizaPlanta() {
 ```
 
 
+**Ejemplo 5: DELETE** El siguiente ejemplo elimina una planta identificada por su `id` que se pide por consola.
 
+``` kotlin
+fun eliminarPlanta() {
+    print("Introduce un ID: ")
+    val pideID = readLine()
+    if (pideID != null && pideID.isNotBlank()) {
+        val idPlanta = pideID.toInt()
 
-**Sentencias DELETE**
-
-Las sentencias **DELETE** permiten eliminar registros de una tabla.
-
-
-
-
-**Ejemplo_Delete.kt**: Este fragmento elimina el articulo "00001"
-
-       package SQLite
-       import java.sql.DriverManager
-
-        fun main() {
-            val dbPath = "src/main/resources/Tienda.sqlite"
-            val dbFile = java.io.File(dbPath)
-            val url = "jdbc:sqlite:${dbFile.absolutePath}"
-
-            DriverManager.getConnection(url).use { conn ->
-
-                val sql = "DELETE FROM article WHERE cod_a = ?"
-                conn.prepareStatement(sql).use { stmt ->
-                stmt.setString(1, "00001")
+        val conn = BD.getConnection()
+        if (conn != null) {
+            val sql = "DELETE FROM plantas WHERE id = ?"
+            conn.prepareStatement(sql).use { stmt ->
+                stmt.setInt(1, idPlanta)
                 stmt.executeUpdate()
-                }
             }
+            BD.closeConnection(conn)
+            println("Planta eliminada correctamente")
         }
+    }
+}
+```
+
+
 
 
 FALTA a PARTIR DE AQUÍ
