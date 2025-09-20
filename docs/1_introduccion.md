@@ -33,7 +33,7 @@ Un ejemplo sencillo de consulta podría ser:
 
 
 !!! failure ""
-    Tipos de SGBD relacionales
+    **Tipos de SGBD relacionales**
 
 Conocer qué **tipo de gestor de base de datos** estás utilizando es esencial para poder **conectarte** correctamente desde tu aplicación, ya que cada uno necesita su propio conector o driver. Podemos encontrar:
 
