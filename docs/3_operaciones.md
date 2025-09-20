@@ -15,7 +15,7 @@ En **JDBC** (Java Database Connectivity), las operaciones sobre la base de datos
 | Ejecutar muchas veces con distintos valores         | `PreparedStatement` |
 | Crear tablas o sentencias SQL complejas que no cambian | `CreateStatement`
 
----
+
 - Los métodos **executeQuery()**, **executeUpdate()** y **execute()** se utilizan para ejecutar sentencias SQL, pero se usan en contextos diferentes. A continuación se muestra una tabla con el uso de cada uno:
 
 
@@ -26,7 +26,6 @@ Método|	Uso principal|	Tipo de sentencia SQL|	Resultado que devuelve
 **execute()**|No se sabe de antemano qué tipo de sentencia SQL se va a ejecutar (consulta o modificación)| Sentencias SQL que pueden devolver varios resultados| Booleano **true** si el resultado es un ResultSet (SELECT) y **false** si el resultado es un entero (INSERT, UPDATE, DELETE,CREATE, ALTER)
 
 
----
 
 <span class="mi_h2">Buenas prácticas</span>
 
@@ -54,33 +53,39 @@ Si no utilizas **use {}** en Kotlin (o try-with-resources en Java), entonces deb
 
 <span class="mi_h2">Ejemplos en SQlite</span>
 
-Los siguientes ejemplos se han realizado sobre la tabla `plantas`de la BD `plantas.sqlite` y se ha utilizado las funciones de conexión y desconexión programadas anteriormente en un objeto en un archivo **.kt** separado
+Los siguientes ejemplos se han realizado sobre la tabla `plantas`de la BD `plantas.sqlite` y se ha utilizado las funciones de conexión y desconexión programadas anteriormente en un objeto en un archivo **.kt** separado.
 
 
-**Ejemplo 1 - Consulta sin parámetros:** El siguiente ejemplo consulta toda la infromación de las plantas y la mustra por consola de forma ordenada:
+**Ejemplo 1 - Consulta sin parámetros:** El siguiente ejemplo consulta toda la información de las plantas y la muestra por consola.
 
 ``` kotlin
 fun consultarPlantas() {
     val conn = BD.getConnection()
     if (conn != null) {
         val sql = "SELECT * FROM plantas"
-        conn.prepareStatement(sql).use { stmt ->
+        try {
+            conn.createStatement().use { stmt ->  
+                stmt.executeQuery(sql).use { rs ->
+                    println("Plantas encontradas:")
 
-            stmt.executeQuery().use { rs ->
-                println("Plantas encontradas:")
+                    while (rs.next()) {
+                        val idPlanta = rs.getInt("id")
+                        val nombreComun = rs.getString("nombre_comun")
+                        val nombreCientifico = rs.getString("nombre_cientifico")
+                        val frecuenciaRiego = rs.getInt("frecuencia_riego")
+                        val altura = rs.getDouble("altura")
 
-                while (rs.next()) {
-                    val idPlanta = rs.getString("id")
-                    val nombreComun = rs.getString("nombre_comun")
-                    val nombreCientifico = rs.getString("nombre_cientifico")
-                    val frecuenciaRiego = rs.getInt("frecuencia_riego")
-                    val altura = rs.getDouble("altura")
-
-                    println("- $idPlanta: $nombreComun ($nombreCientifico). Frecuencia de riego: $frecuenciaRiego, altura: $altura")
+                        println("- $idPlanta: $nombreComun ($nombreCientifico). Frecuencia de riego: $frecuenciaRiego días, altura: $altura m")
+                    }
                 }
             }
+        } catch (e: Exception) {
+            println("Error al consultar plantas: ${e.message}")
+        } finally {
+            BD.closeConnection(conn)
         }
-        BD.closeConnection(conn)
+    } else {
+        println("No se pudo establecer la conexión a la base de datos.")
     }
 }
 ```
@@ -92,7 +97,7 @@ fun consultarPlantas() {
     Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
-**Ejemplo 2 - Consulta con parámetros:** El siguiente ejemplo consulta la infromación de la planta cuyo ID coincide con el pasado como parámetro:
+**Ejemplo 2 - Consulta con parámetros:** El siguiente ejemplo consulta la infromación de la planta cuyo ID coincide con el pasado como parámetro.
 
 ``` kotlin
 fun consultarPlantaPorId(id: Int) {
@@ -149,16 +154,22 @@ fun insertarPlanta() {
         val altura = 8.5
 
         val sql = "INSERT INTO plantas (nombre_comun, nombre_cientifico, frecuencia_riego, altura) VALUES (?, ?, ?, ?)"
-
-        conn.prepareStatement(sql).use { stmt ->
-            stmt.setString(1, nombreComun)
-            stmt.setString(2, nombreCientifico)
-            stmt.setInt(3, frecuenciaRiego)
-            stmt.setDouble(4, altura)
-            stmt.executeUpdate()
+        try {
+            conn.prepareStatement(sql).use { stmt ->
+                stmt.setString(1, nombreComun)
+                stmt.setString(2, nombreCientifico)
+                stmt.setInt(3, frecuenciaRiego)
+                stmt.setDouble(4, altura)
+                stmt.executeUpdate()
+            }
+        } catch (e: Exception) {
+            println("Error al consultar planta: ${e.message}")
+        } finally {
+            println("Planta insertada correctamente")
+            BD.closeConnection(conn)
         }
-        BD.closeConnection(conn)
-        println("Planta insertada correctamente")
+    } else {
+        println("No se pudo establecer la conexión a la base de datos.")
     }
 }
 ``` 
@@ -173,33 +184,25 @@ fun insertarPlanta() {
 **Ejemplo 4 - UPDATE:**  El siguiente ejemplo actualiza la `altura` de una planta identificada por su `id` (el id de la planta a actualizar y la nueva altura se piden por consola).
 
 ``` kotlin
-fun actualizarPlanta() {
-    var idPlanta = 0
-    var nuevaAltura = 0.0
-
-    print("Introduce un ID: ")
-    val pideID = readLine()
-    if (pideID != null && pideID.isNotBlank()) {
-        idPlanta = pideID.toInt()
-
-        print("Introduce la nueva altura: ")
-        val pideAltura = readLine()
-        if (pideAltura != null && pideAltura.isNotBlank()) {
-            nuevaAltura = pideAltura.toDouble()
-        }
-    }
-
+fun actualizarPlanta(id: Int, altura: Double) {
     val conn = BD.getConnection()
     if (conn != null) {
         val sql = "UPDATE plantas SET altura = ? WHERE id = ?"
+        try {
+            conn.prepareStatement(sql).use { stmt ->
+                stmt.setDouble(1, altura)
+                stmt.setInt(2, id)
 
-        conn.prepareStatement(sql).use { stmt ->
-            stmt.setDouble(1, nuevaAltura)
-            stmt.setInt(2, idPlanta)
-            stmt.executeUpdate()
+                stmt.executeUpdate()
+            }
+        } catch (e: Exception) {
+            println("Error al consultar planta: ${e.message}")
+        } finally {
+            println("Planta actualizada correctamente")
+            BD.closeConnection(conn)
         }
-        BD.closeConnection(conn)
-        println("Planta actualizada correctamente")
+    } else {
+        println("No se pudo establecer la conexión a la base de datos.")
     }
 }
 ```
@@ -211,25 +214,26 @@ fun actualizarPlanta() {
     Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
-**Ejemplo 5 - DELETE:** El siguiente ejemplo elimina una planta identificada por su `id` que se pide por consola.
+**Ejemplo 5 - DELETE:** El siguiente ejemplo elimina una planta identificada por su `id` que se pasa por parámetro a la función.
 
 ``` kotlin
-fun eliminarPlanta() {
-    print("Introduce un ID: ")
-    val pideID = readLine()
-    if (pideID != null && pideID.isNotBlank()) {
-        val idPlanta = pideID.toInt()
-
-        val conn = BD.getConnection()
-        if (conn != null) {
-            val sql = "DELETE FROM plantas WHERE id = ?"
+fun eliminarPlanta(id: Int) {
+    val conn = BD.getConnection()
+    if (conn != null) {
+        val sql = "DELETE FROM plantas WHERE id = ?"
+        try {
             conn.prepareStatement(sql).use { stmt ->
-                stmt.setInt(1, idPlanta)
+                stmt.setInt(1, id)
                 stmt.executeUpdate()
             }
-            BD.closeConnection(conn)
+        } catch (e: Exception) {
+            println("Error al consultar planta: ${e.message}")
+        } finally {
             println("Planta eliminada correctamente")
+            BD.closeConnection(conn)
         }
+    } else {
+    println("No se pudo establecer la conexión a la base de datos.")
     }
 }
 ```
