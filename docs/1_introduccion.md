@@ -32,7 +32,7 @@ Un ejemplo sencillo de consulta podría ser:
     SELECT nombre FROM clientes WHERE ciudad = 'Valencia';
 
 
-<span class="subtitulo">Tipos de SGBD relacionales</span>
+<span class="mi_h2">Tipos de SGBD relacionales</span>
 
 Conocer qué **tipo de gestor de base de datos** estás utilizando es esencial para poder **conectarte** correctamente desde tu aplicación, ya que cada uno necesita su propio conector o driver. Podemos encontrar:
 
