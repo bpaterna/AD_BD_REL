@@ -139,7 +139,7 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
 
-object DatabaseObj {
+object BD {
     // Ruta al archivo de base de datos SQLite
     private val dbPath = "datos/plantas.sqlite"
     private val dbFile = File(dbPath)
@@ -179,10 +179,10 @@ De esta forma, cuando el programa necesite acceder a la BD llamará a la funció
 
 ``` kotlin
 fun main() {
-    val conn = DatabaseObj.getConnection()
+    val conn = BD.getConnection()
     if (conn != null) {
         println("Conectado a la BD correctamente.")
-        DatabaseObj.closeConnection(conn)
+        BD.closeConnection(conn)
     }
 }
 ```
