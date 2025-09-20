@@ -6,7 +6,7 @@ Cuando desarrollamos aplicaciones que trabajan con información persistente, nec
   - Acceso mediante conectores.
 
 
-<span class="subtitulo">Acceso mediante ORM</span>
+<span class="mi_h2">Acceso mediante ORM</span>
 
 Un **ORM** es una herramienta que permite trabajar con la base de datos como si fuera un conjunto de objetos, evitando tener que escribir directamente SQL. El **ORM** se encarga de mapear las tablas a clases y los registros a objetos, y traduce automáticamente las operaciones del código a consultas SQL. Es ideal para trabajar de forma más productiva en aplicaciones complejas. Sus principales características son:
 
@@ -26,7 +26,7 @@ Room|	Java/Kotlin|	ORM oficial para bases de datos SQLite en Android
 **JPA** (Java Persistence API) es una especificación estándar de Java que define cómo se deben mapear objetos Java (o Kotlin) a tablas de bases de datos relacionales. Es decir, permite gestionar la persistencia de datos de forma orientada a objetos, sin necesidad de escribir SQL directamente. Es el estándar utilizado por las herramientas ORM como Hibernate, EclipseLink, o Spring Data JPA.
 
 
-<span class="subtitulo">Acceso mediante conectores</span>
+<span class="mi_h2">Acceso mediante conectores</span>
 
 En la introducción ya vimos que un **conector** (también llamado driver) es una librería software que permite que una aplicación se comunique con un gestor de base de datos (SGBD). Actúa como un puente entre nuestro código y la base de datos, traduciendo las instrucciones SQL a un lenguaje que el gestor puede entender y viceversa. Sin un conector, tu aplicación no podría comunicarse con la base de datos.
 
