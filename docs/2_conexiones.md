@@ -115,7 +115,7 @@ fun main() {
     2. Añade las dependencias para trabajar con SQLite.
     3. Descarga el fichero con la base de datos de ejemplo desde el siguiente enlace:
     [plantas.sqlite](material/plantas.sqlite){:plantas.sqlite}
-    4. Copia el fichero en la carpeta correcta del proyecto
+    4. Copia el fichero en la carpeta correcta del proyecto.
     5. Ejecuta el programa y comprueba que la salida por consola es la siguiente:
 
         <span class="mi_consola">Ruta de la BD: F:\...\src\main\resources\plantas.sqlite</span>
@@ -177,12 +177,7 @@ object DatabaseObj {
 
 De esta forma, cuando el programa necesite acceder a la BD llamará a la función de conexión y cuando termine llamará a la fución que cierra la conexión. Un ejemplo de estas llamadas podría ser:
 
-**conexion_objeto.kt**
 ``` kotlin
-import java.io.File
-import java.sql.DriverManager
-import kotlin.use
-
 fun main() {
     val conn = DatabaseObj.getConnection()
     if (conn != null) {
@@ -195,10 +190,9 @@ fun main() {
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
       
-!!! warning "Práctica 3: Organizar conexión a la BD" 
+!!! warning "Práctica 3: Optimiza el manejo de la BD de tu aplicación" 
     1. Crea el archivo con las funciones de conexión y desconexión a la BD.
     2. Comprueba desde el main que el programa se conecta a la BD correctamente y luego cierra la conexión.
-
 
 
 
