@@ -3,12 +3,10 @@
 Cuando desarrollamos aplicaciones que trabajan con información persistente, necesitamos acceder a BD para consultar, insertar, modificar o eliminar datos. Existen dos formas principales de hacerlo desde el código: 
 
   - Acceso mediante ORM (Object-Relational Mapping).
-  - Acceso mediante conectores JDBC (Java Database Connectivity).
+  - Acceso mediante conectores.
 
-mediante **ORM** y mediante **conectores**.
 
-!!! failure ""
-    Acceso mediante ORM
+📌 **Acceso mediante ORM**
 
 Un **ORM** es una herramienta que permite trabajar con la base de datos como si fuera un conjunto de objetos, evitando tener que escribir directamente SQL. El **ORM** se encarga de mapear las tablas a clases y los registros a objetos, y traduce automáticamente las operaciones del código a consultas SQL. Es ideal para trabajar de forma más productiva en aplicaciones complejas. Sus principales características son:
 
@@ -28,29 +26,7 @@ Room|	Java/Kotlin|	ORM oficial para bases de datos SQLite en Android
 **JPA** (Java Persistence API) es una especificación estándar de Java que define cómo se deben mapear objetos Java (o Kotlin) a tablas de bases de datos relacionales. Es decir, permite gestionar la persistencia de datos de forma orientada a objetos, sin necesidad de escribir SQL directamente. Es el estándar utilizado por las herramientas ORM como Hibernate, EclipseLink, o Spring Data JPA.
 
 
-!!! failure ""
-    Acceso mediante conectores JDBC
-
-**JDBC** es una API estándar de Java (y compatible con Kotlin) que permite conectarse a una BD, enviar instrucciones SQL y procesar los resultados manualmente. Es el método de más bajo nivel, pero ofrece un control total sobre lo que ocurre en la BD. Es ideal para aprender los fundamentos del acceso a datos y tener control total. Sus principales características son:
-
- - El programador escribe directamente las consultas SQL.
- - Requiere gestionar manualmente conexiones, sentencias y resultados.
- - Se necesita un driver específico (conector) para cada SGBD:
-
-**Algunos ejemplos de conectores**
-
-SGBD|	Conector (Driver JDBC)|	URL de conexión típica
-----|-------------------------|-----------------------
-PostgreSQL|	org.postgresql.Driver| jdbc:postgresql://host:puerto/basedatos
-MySQL / MariaDB|	com.mysql.cj.jdbc.Driver| jdbc:mysql://host:puerto/basedatos
-SQLite (embebido)|	org.sqlite.JDBC	|jdbc:sqlite:ruta_al_fichero
-
-Aprender JDBC ayuda a entender mejor lo que hace un ORM por debajo
-
----
----
-
-De todas las formas posibles de interactuar con una base de datos, nos vamos a centrar en el uso de **conectores**, porque son la forma más directa y habitual de acceder a la base de datos desde un lenguaje de programación, como Kotlin, que es el que estamos utilizando en este módulo.
+📌 **Acceso mediante conectores{.subtitulo}**
 
 En la introducción ya vimos que un **conector** (también llamado driver) es una librería software que permite que una aplicación se comunique con un gestor de base de datos (SGBD). Actúa como un puente entre nuestro código y la base de datos, traduciendo las instrucciones SQL a un lenguaje que el gestor puede entender y viceversa. Sin un conector, tu aplicación no podría comunicarse con la base de datos.
 
@@ -67,12 +43,27 @@ Las principales formas de conectarse a una base de datos son las siguientes:
 | Medio de conexión                         | Descripción                                                                 |
 |-------------------------------------------|-----------------------------------------------------------------------------|
 | Aplicaciones de escritorio             | Herramientas gráficas como **DBeaver**, **pgAdmin**, **MySQL Workbench**, **DB Browser for SQLite**. Permiten explorar, consultar y administrar BD de forma visual. |
-| Aplicaciones desarrolladas en código   | Programas en **Kotlin**, **Java**, **Python**, **C#**, etc., mediante **conectores**{.verde} como **JDBC**, **psycopg2**, **ODBC**, etc. para acceder a BD desde código. |
+| Aplicaciones desarrolladas en código   | Programas en **Kotlin**, **Java**, **Python**, **C#**, etc., mediante **conectores** como **JDBC**, **psycopg2**, **ODBC**, etc. para acceder a BD desde código. |
 | Línea de comandos                      | Clientes como `psql` (PostgreSQL), `mysql`, `sqlite3`. Permiten ejecutar comandos SQL directamente desde terminal. |
 | Aplicaciones web                        | Sitios web que acceden a BD desde el backend (por ejemplo, en Spring Boot, Node.js, Django, etc.). |
 | APIs REST o servidores intermedios     | Servicios web que conectan la BD con otras aplicaciones, actuando como puente o capa de seguridad. |
 | Aplicaciones móviles                   | Apps Android/iOS que acceden a BD locales (como **SQLite**) o remotas (vía **Firebase**, API REST, etc.). |
 | Herramientas de integración de datos   | Software como **Talend**, **Pentaho**, **Apache Nifi** para migrar, transformar o sincronizar datos entre sistemas. |
+
+De todas las formas posibles de interactuar con una base de datos, nos vamos a centrar en el uso de **conectores JDBC (Java Database Connectivity)**. **JDBC** es una API estándar de Java (y compatible con Kotlin) que permite conectarse a una BD, enviar instrucciones SQL y procesar los resultados manualmente. Es el método de más bajo nivel, pero ofrece un control total sobre lo que ocurre en la BD. Es ideal para aprender los fundamentos del acceso a datos y tener control total y aprenderlo ayuda a entender mejor lo que hace un ORM por debajo. Sus principales características son:
+
+ - El programador escribe directamente las consultas SQL.
+ - Requiere gestionar manualmente conexiones, sentencias y resultados.
+ - Se necesita un driver específico (conector) para cada SGBD:
+
+
+**Algunos ejemplos de conectores**
+
+SGBD|	Conector (Driver JDBC)|	URL de conexión típica
+----|-------------------------|-----------------------
+PostgreSQL|	org.postgresql.Driver| jdbc:postgresql://host:puerto/basedatos
+MySQL / MariaDB|	com.mysql.cj.jdbc.Driver| jdbc:mysql://host:puerto/basedatos
+SQLite (embebido)|	org.sqlite.JDBC	|jdbc:sqlite:ruta_al_fichero
 
 Una aplicación (escrita en Kotlin, Java u otro lenguaje) puede leer, insertar o modificar información almacenada en una base de datos relacional si previamente se ha conectado al sitema gestor de base de datos (SGBD). **JDBC** (Java Database Connectivity) es la API básica de Java (conector) para conectarse a bases de datos relacionales y su sintaxis general es:
 
@@ -105,18 +96,18 @@ A continuación se describe cómo conectar a una base de datos **SQLite** llamad
 import java.io.File
 import java.sql.DriverManager
 
-    fun main() {
-        // Ruta al archivo de base de datos SQLite
-        val dbPath = "datos/plantas.sqlite"
-        val dbFile = File(dbPath)
-        println("Ruta de la BD: ${dbFile.absolutePath}")
-        val url = "jdbc:sqlite:${dbFile.absolutePath}"
+fun main() {
+    // Ruta al archivo de base de datos SQLite
+    val dbPath = "src/main/resources/plantas.sqlite"
+    val dbFile = File(dbPath)
+    println("Ruta de la BD: ${dbFile.absolutePath}")
+    val url = "jdbc:sqlite:${dbFile.absolutePath}"
 
-        // Conexión
-        DriverManager.getConnection(url).use { conn ->
-            println("Conexión establecida correctamente con SQLite.")
-        }
+    // Conexión y prueba
+    DriverManager.getConnection(url).use { conn ->
+        println("Conexión establecida correctamente con SQLite.")
     }
+}
 ```
 
 
@@ -182,13 +173,18 @@ import java.sql.DriverManager
 import kotlin.use
 
 fun main() {
-   FALTA CÓDIGO DE EJEMPLO
+    val conn = DatabaseObj.getConnection()
+    if (conn != null) {
+        println("Conectado a la BD correctamente.")
+        DatabaseObj.closeConnection(conn)
+    }
 }
+
 ```
       
 !!! warning "Práctica 3: Organizar conexión a la BD" 
-    1. Crea el archivo con las funciones de conexión y desconexión a la BD.
-    2. Comprueba desde el main que el programa se conecta a la BD correctamente y luego cierra la conexión.
+        1. Crea el archivo con las funciones de conexión y desconexión a la BD.
+        2. Comprueba desde el main que el programa se conecta a la BD correctamente y luego cierra la conexión.
 
 
 
