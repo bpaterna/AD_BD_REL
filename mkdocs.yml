@@ -17,7 +17,7 @@ theme:
     - search.suggest
     - toc.integrate
 nav:
-  -Guía de uso: 0_index.md
+  - Guía de uso: 0_index.md
   - Contenido:
     - 1. Introducción: 1_introduccion.md
     - 2. Conexión al SGBD: 2_conexiones.md
