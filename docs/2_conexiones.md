@@ -113,7 +113,7 @@ fun main() {
 !!! success "Realiza lo siguiente" 
     1. Crea un proyecto kotlin con gradle o utiliza uno que ya tengas.
     2. Añade las dependencias para trabajar con SQLite.
-    3. Descarga el fichero con la base de datos de pruebas siguiente:
+    3. Descarga el fichero con la base de datos de ejemplo desde el siguiente enlace:
     [plantas.sqlite](material/plantas.sqlite){:plantas.sqlite}
     4. Copia el fichero en la carpeta correcta del proyecto
     5. Ejecuta el programa y comprueba que la salida por consola es la siguiente:
@@ -191,6 +191,9 @@ fun main() {
     }
 }
 ```
+
+!!! success "Realiza lo siguiente" 
+    Prueba el código de ejemplo y verifica que funciona correctemente.
       
 !!! warning "Práctica 3: Organizar conexión a la BD" 
     1. Crea el archivo con las funciones de conexión y desconexión a la BD.
