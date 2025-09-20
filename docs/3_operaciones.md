@@ -15,7 +15,7 @@ En **JDBC** (Java Database Connectivity), las operaciones sobre la base de datos
 | Ejecutar muchas veces con distintos valores         | `PreparedStatement` |
 | Crear tablas o sentencias SQL complejas que no cambian | `CreateStatement`
 
-
+---
 - Los métodos **executeQuery()**, **executeUpdate()** y **execute()** se utilizan para ejecutar sentencias SQL, pero se usan en contextos diferentes. A continuación se muestra una tabla con el uso de cada uno:
 
 
@@ -25,14 +25,35 @@ Método|	Uso principal|	Tipo de sentencia SQL|	Resultado que devuelve
 **executeUpdate()**|Realizar modificaciones|	INSERT, UPDATE, DELETE, DDL (CREATE, DROP, etc.)|	Entero con el número de filas afectadas
 **execute()**|No se sabe de antemano qué tipo de sentencia SQL se va a ejecutar (consulta o modificación)| Sentencias SQL que pueden devolver varios resultados| Booleano **true** si el resultado es un ResultSet (SELECT) y **false** si el resultado es un entero (INSERT, UPDATE, DELETE,CREATE, ALTER)
 
-**CRUD** se refiere a las siglas de: **C**reate (crear), **R**ead (Leer), **U**pdate (Actualizar) y **D**elete (Borrar). 
+
+---
+**Liberación de recursos**
+
+Cuando una aplicación accede a una base de datos, abre varios recursos internos que consumen memoria y conexiones activas en el sistema:
+
+- La conexión con el servidor de base de datos (Connection).
+- Las sentencias SQL preparadas (Statement o PreparedStatement).
+- El resultado de la consulta (ResultSet).
+
+Estos recursos no se liberan automáticamente cuando se termina su uso (especialmente en Java o Kotlin con JDBC). Si no se cierran correctamente, se pueden producir problemas como:
+
+- Fugas de memoria.
+- Bloqueo de conexiones (demasiadas conexiones abiertas).
+- Degradación del rendimiento.
+- Errores inesperados en la aplicación.
+
+En Kotlin, puedes usar **use {}** para cerrar recursos automáticamente al finalizar el bloque.
 
 
 <span class="mi_h2">Ejemplos en SQlite</span>
 
+
+**CRUD** se refiere a las siglas de: **C**reate (crear), **R**ead (Leer), **U**pdate (Actualizar) y **D**elete (Borrar). 
+
+
 Los siguientes ejemplos se han realizado sobre la tabla `plantas`de la BD `plantas.sqlite` y se ha utilizado las funciones de conexión y desconexión programadas anteriormente en un objeto en un archivo **.kt** separado
 
-**Ejemplo 1: Consulta sin parámetros** El siguiente ejemplo consulta toda la infromación de las plantas y la mustra por consola de forma ordenada:
+**Ejemplo 1 - Consulta sin parámetros:** El siguiente ejemplo consulta toda la infromación de las plantas y la mustra por consola de forma ordenada:
 
 ``` kotlin
 fun consultarPlantas() {
@@ -59,17 +80,26 @@ fun consultarPlantas() {
     }
 }
 ```
+!!! success "Realiza lo siguiente" 
+    Prueba el código de ejemplo y verifica que funciona correctemente.
 
+!!! warning "Práctica 3: Conecta a tu base de datos" 
+    Replica el ejemplo anterior para que funcione con tu base de datos.
 
-**Ejemplo 2: Consulta con parámetros** El siguiente ejemplo consulta la infromación de la planta cuyo ID coincide con uno proporcionado por el usuario:
+**Ejemplo 2 - Consulta con parámetros:** El siguiente ejemplo consulta la infromación de la planta cuyo ID coincide con uno proporcionado por el usuario:
 ``` kotlin
 
 ``` 
 
+!!! success "Realiza lo siguiente" 
+    Prueba el código de ejemplo y verifica que funciona correctemente.
 
 
+!!! warning "Práctica 4: Conecta a tu base de datos" 
+    Replica el ejemplo anterior para que funcione con tu base de datos.
 
-**Ejemplo 3: INSERT** El siguiente ejemplo añade un registro a la tabla de la BD.
+
+**Ejemplo 3 - INSERT:** El siguiente ejemplo añade un registro a la tabla de la BD.
 
 ``` kotlin
 fun insertarPlanta() {
@@ -96,9 +126,14 @@ fun insertarPlanta() {
 }
 ``` 
 
+!!! success "Realiza lo siguiente" 
+    Prueba el código de ejemplo y verifica que funciona correctemente.
+
+!!! warning "Práctica 5: Conecta a tu base de datos" 
+    Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
-**Ejemplo 4: UPDATE**  El siguiente ejemplo actualiza la `altura` de una planta identificada por su `id` (el id de la planta a actualizar y la nueva altura se piden por consola).
+**Ejemplo 4 - UPDATE:**  El siguiente ejemplo actualiza la `altura` de una planta identificada por su `id` (el id de la planta a actualizar y la nueva altura se piden por consola).
 
 ``` kotlin
 fun actualizarPlanta() {
@@ -131,9 +166,14 @@ fun actualizarPlanta() {
     }
 }
 ```
+!!! success "Realiza lo siguiente" 
+    Prueba el código de ejemplo y verifica que funciona correctemente.
+
+!!! warning "Práctica 6: Conecta a tu base de datos" 
+    Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
-**Ejemplo 5: DELETE** El siguiente ejemplo elimina una planta identificada por su `id` que se pide por consola.
+**Ejemplo 5 - DELETE:** El siguiente ejemplo elimina una planta identificada por su `id` que se pide por consola.
 
 ``` kotlin
 fun eliminarPlanta() {
@@ -155,6 +195,15 @@ fun eliminarPlanta() {
     }
 }
 ```
+!!! success "Realiza lo siguiente" 
+    Prueba el código de ejemplo y verifica que funciona correctemente.
+
+!!! warning "Práctica 7: Conecta a tu base de datos" 
+    Replica el ejemplo anterior para que funcione con tu base de datos.
+
+
+
+
 
 
 
@@ -207,20 +256,6 @@ FALTA a PARTIR DE AQUÍ
 <span class="mi_h2">Liberación de recursos</span>
 
 
-Cuando una aplicación accede a una base de datos, abre varios recursos internos que consumen memoria y conexiones activas en el sistema:
-
-- La conexión con el servidor de base de datos (Connection)
-- Las sentencias SQL preparadas (Statement o PreparedStatement)
-- El resultado de la consulta (ResultSet)
-
-Estos recursos no se liberan automáticamente cuando se termina su uso (especialmente en Java o Kotlin con JDBC). Si no se cierran correctamente, se pueden producir problemas como:
-
-- Fugas de memoria
-- Bloqueo de conexiones (demasiadas conexiones abiertas)
-- Degradación del rendimiento
-- Errores inesperados en la aplicación
-
-En Kotlin, puedes usar **use {}** para cerrar recursos automáticamente al finalizar el bloque.
 
 Si no utilizas **use {}** en Kotlin (o try-with-resources en Java), entonces debes cerrar manualmente cada uno de los recursos abiertos (ResultSet, Statement y Connection) usando .**close()**, y normalmente deberías hacerlo dentro de un bloque **finally** para garantizar su cierre incluso si ocurre un error. El orden correcto de cierre es del más interno al más externo.
 
