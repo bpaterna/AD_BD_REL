@@ -45,13 +45,13 @@ Estos recursos no se liberan automáticamente cuando se termina su uso (especial
 En Kotlin, puedes usar **use {}** para cerrar recursos automáticamente al finalizar el bloque.
 
 
+Si no utilizas **use {}** en Kotlin (o try-with-resources en Java), entonces debes cerrar manualmente cada uno de los recursos abiertos (ResultSet, Statement y Connection) usando .**close()**, y normalmente deberías hacerlo dentro de un bloque **finally** para garantizar su cierre incluso si ocurre un error. El orden correcto de cierre es del más interno al más externo.
+
+
 <span class="mi_h2">Ejemplos en SQlite</span>
 
-
-**CRUD** se refiere a las siglas de: **C**reate (crear), **R**ead (Leer), **U**pdate (Actualizar) y **D**elete (Borrar). 
-
-
 Los siguientes ejemplos se han realizado sobre la tabla `plantas`de la BD `plantas.sqlite` y se ha utilizado las funciones de conexión y desconexión programadas anteriormente en un objeto en un archivo **.kt** separado
+
 
 **Ejemplo 1 - Consulta sin parámetros:** El siguiente ejemplo consulta toda la infromación de las plantas y la mustra por consola de forma ordenada:
 
@@ -80,11 +80,13 @@ fun consultarPlantas() {
     }
 }
 ```
+
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
 
 !!! warning "Práctica 3: Conecta a tu base de datos" 
     Replica el ejemplo anterior para que funcione con tu base de datos.
+
 
 **Ejemplo 2 - Consulta con parámetros:** El siguiente ejemplo consulta la infromación de la planta cuyo ID coincide con uno proporcionado por el usuario:
 ``` kotlin
@@ -93,7 +95,6 @@ fun consultarPlantas() {
 
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
-
 
 !!! warning "Práctica 4: Conecta a tu base de datos" 
     Replica el ejemplo anterior para que funcione con tu base de datos.
@@ -166,6 +167,7 @@ fun actualizarPlanta() {
     }
 }
 ```
+
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
 
@@ -195,11 +197,15 @@ fun eliminarPlanta() {
     }
 }
 ```
+
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
 
 !!! warning "Práctica 7: Conecta a tu base de datos" 
     Replica el ejemplo anterior para que funcione con tu base de datos.
+
+
+
 
 
 
@@ -253,11 +259,6 @@ FALTA a PARTIR DE AQUÍ
 
 
 
-<span class="mi_h2">Liberación de recursos</span>
-
-
-
-Si no utilizas **use {}** en Kotlin (o try-with-resources en Java), entonces debes cerrar manualmente cada uno de los recursos abiertos (ResultSet, Statement y Connection) usando .**close()**, y normalmente deberías hacerlo dentro de un bloque **finally** para garantizar su cierre incluso si ocurre un error. El orden correcto de cierre es del más interno al más externo.
 
 **Ejemplos**{.azul} para cerrar recursos abiertos sin **use()**, de forma manual y con el bloque **try-catch-finally**
 
