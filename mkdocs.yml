@@ -25,6 +25,7 @@ nav:
     - DB Browser: db_browser_sqlite.md
     - DBeaver: dbeaver.md
 markdown_extensions:
+  - attr_list
   - admonition
   - footnotes
   - toc:
