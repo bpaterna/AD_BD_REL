@@ -31,9 +31,17 @@ Un ejemplo sencillo de consulta podría ser:
 
     SELECT nombre FROM clientes WHERE ciudad = 'Valencia';
 
+
+
+<span class="subtitulo">Hola</span>
+
+
+Hola {.subtitulo}
+
+
 :fontawesome-solid-video: **Tipos de SGBD relacionales**
 
-:heart: **Tipos de SGBD relacionales**
+📌 **Tipos de SGBD relacionales**
 
 !!! failure ""
     **Tipos de SGBD relacionales**
