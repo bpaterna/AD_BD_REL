@@ -110,10 +110,19 @@ fun main() {
 }
 ```
 
+!!! success "Realiza lo siguiente" 
+    1. Crea un proyecto kotlin con gradle o utiliza uno que ya tengas.
+    2. Añade las dependencias para trabajar con SQLite.
+    3. Descarga el fichero con la base de datos de pruebas siguiente:
+    [file.ext](material/plantas.sqlite){:download}
+    4. Copia el fichero en la carpeta correcta del proyecto
+    5. Ejecuta el programa y comprueba que la salida por consola es la siguiente:
+        Ruta de la BD: F:\AD\proyectosKotlin\2-BD_rel\plantas\src\main\resources\plantas.sqlite
+        Conexión establecida correctamente con SQLite.
 
-!!! warning "Práctica 2: Comprobar conexión" 
-    1. Añade al archivo **build.gradle.kts** en la sección de dependencias la línea correspondiente al **conector JDBC** de **SQLite**.
-    2. Copia el código anterior y modifica lo que necesites para comprobar que el programa establece conexión correctamente con tu BD.
+
+!!! warning "Práctica 2: Conecta a tu base de datos" 
+    Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
 Una buena páctica es cerrar la conexión a la base de datos después de realizar operaciones sobre ella para que permanezca abierta el mínimo tiempo posible. Una forma de conseguir esto es tener las funciones de conexión y desconexión en un objeto separado. 
