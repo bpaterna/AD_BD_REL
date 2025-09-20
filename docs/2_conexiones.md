@@ -114,11 +114,12 @@ fun main() {
     1. Crea un proyecto kotlin con gradle o utiliza uno que ya tengas.
     2. Añade las dependencias para trabajar con SQLite.
     3. Descarga el fichero con la base de datos de pruebas siguiente:
-    [file.ext](material/plantas.sqlite){:download}
+    [plantas.sqlite](material/plantas.sqlite){:download}
     4. Copia el fichero en la carpeta correcta del proyecto
     5. Ejecuta el programa y comprueba que la salida por consola es la siguiente:
-        Ruta de la BD: F:\AD\proyectosKotlin\2-BD_rel\plantas\src\main\resources\plantas.sqlite
-        Conexión establecida correctamente con SQLite.
+
+        Ruta de la BD: F:\...\src\main\resources\plantas.sqlite
+        Conexión establecida correctamente con SQLite
 
 
 !!! warning "Práctica 2: Conecta a tu base de datos" 
