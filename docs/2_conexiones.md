@@ -127,9 +127,14 @@ fun main() {
     Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
-Una buena páctica es cerrar la conexión a la base de datos después de realizar operaciones sobre ella para que permanezca abierta el mínimo tiempo posible. Una forma de conseguir esto es tener las funciones de conexión y desconexión en un objeto separado. 
+
+<span class="mi_h2">Buenas prácticas</span>
+
+Una buena páctica es **cerrar la conexión a la base de datos** después de realizar operaciones sobre ella para que permanezca abierta el mínimo tiempo posible. Una forma de conseguir esto es tener las funciones de conexión y desconexión en un objeto separado. 
 
 Además, otra ventaja de trabajar así es que si la base de datos cambia de ubicación, solo habrá que actualizar la ruta dentro del código del objeto que maneja la conexión y no en varios sitios del programa. 
+
+También es muy recomendable utilizar los bloques **try-catch-finally** para capturar posibles errores y excepciones.
 
 Un ejemplo del código podría ser el siguiente:
 
