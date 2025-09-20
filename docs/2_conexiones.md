@@ -6,7 +6,7 @@ Cuando desarrollamos aplicaciones que trabajan con información persistente, nec
   - Acceso mediante conectores.
 
 
-📌 **Acceso mediante ORM**
+<span class="subtitulo">Acceso mediante ORM</span>
 
 Un **ORM** es una herramienta que permite trabajar con la base de datos como si fuera un conjunto de objetos, evitando tener que escribir directamente SQL. El **ORM** se encarga de mapear las tablas a clases y los registros a objetos, y traduce automáticamente las operaciones del código a consultas SQL. Es ideal para trabajar de forma más productiva en aplicaciones complejas. Sus principales características son:
 
@@ -26,7 +26,7 @@ Room|	Java/Kotlin|	ORM oficial para bases de datos SQLite en Android
 **JPA** (Java Persistence API) es una especificación estándar de Java que define cómo se deben mapear objetos Java (o Kotlin) a tablas de bases de datos relacionales. Es decir, permite gestionar la persistencia de datos de forma orientada a objetos, sin necesidad de escribir SQL directamente. Es el estándar utilizado por las herramientas ORM como Hibernate, EclipseLink, o Spring Data JPA.
 
 
-📌 **Acceso mediante conectores{.subtitulo}**
+<span class="subtitulo">Acceso mediante conectores</span>
 
 En la introducción ya vimos que un **conector** (también llamado driver) es una librería software que permite que una aplicación se comunique con un gestor de base de datos (SGBD). Actúa como un puente entre nuestro código y la base de datos, traduciendo las instrucciones SQL a un lenguaje que el gestor puede entender y viceversa. Sin un conector, tu aplicación no podría comunicarse con la base de datos.
 
@@ -179,16 +179,20 @@ fun main() {
         DatabaseObj.closeConnection(conn)
     }
 }
-
 ```
       
 !!! warning "Práctica 3: Organizar conexión a la BD" 
-        1. Crea el archivo con las funciones de conexión y desconexión a la BD.
-        2. Comprueba desde el main que el programa se conecta a la BD correctamente y luego cierra la conexión.
+    1. Crea el archivo con las funciones de conexión y desconexión a la BD.
+    2. Comprueba desde el main que el programa se conecta a la BD correctamente y luego cierra la conexión.
 
 
 
-## Conexión a PostgreSQL
+
+
+<!-- 
+
+## Conexión a PostgreSQL remoto
+
 
 En entornos reales y profesionales, lo más habitual es trabajar con SGBD más potentes y completos, como **PostgreSQL**.
 
@@ -217,7 +221,7 @@ En ambos casos utilizaremos la misma base de datos, llamada geo_ad. Su versión 
 
 
 
-**Configuración de Dependencias (Gradle)**{.azul}
+**Configuración de Dependencias (Gradle)**
 
 Lo primero será incluir las dependencia necesarias en **build.gradle.kts**
 
@@ -226,10 +230,10 @@ Lo primero será incluir las dependencia necesarias en **build.gradle.kts**
             implementation("org.postgresql:postgresql:42.6.0")
         }
 
-**Conexión al servidor**{.azul}
+**Conexión al servidor**
 
 
-**Postgres remoto**{.verde}
+**Postgres remoto**
 
 **Ejemplo_conexion_Postgres_remota.kt**
 
@@ -244,7 +248,14 @@ Lo primero será incluir las dependencia necesarias en **build.gradle.kts**
             fun getConnection() = DriverManager.getConnection(URL, USER, PASSWORD)
         }
 
-**Postgress en Docker**{.verde}
+
+
+
+
+
+
+## Conexión a PostgreSQL en Docker
+
 
 **Ejemplo_conexion_Postgres_local.kt**
         
@@ -259,3 +270,6 @@ Lo primero será incluir las dependencia necesarias en **build.gradle.kts**
             fun getConnection() = DriverManager.getConnection(URL, USER, PASSWORD)
         }
 
+
+
+-->
