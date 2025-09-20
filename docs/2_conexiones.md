@@ -118,9 +118,9 @@ fun main() {
     4. Copia el fichero en la carpeta correcta del proyecto
     5. Ejecuta el programa y comprueba que la salida por consola es la siguiente:
 
-        <span class="mi_consola">Ruta de la BD: F:\...\src\main\resources\plantas.sqlite
+        <span class="mi_consola">Ruta de la BD: F:\...\src\main\resources\plantas.sqlite</span>
 
-        Conexión establecida correctamente con SQLite</span>
+        <span class="mi_consola">Conexión establecida correctamente con SQLite</span>
 
 
 !!! warning "Práctica 2: Conecta a tu base de datos" 
