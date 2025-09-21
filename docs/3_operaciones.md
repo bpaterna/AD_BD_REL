@@ -44,7 +44,42 @@ Estos recursos no se liberan automáticamente cuando se termina su uso (especial
 - Degradación del rendimiento.
 - Errores inesperados en la aplicación.
 
-En Kotlin, cuando utilizas **.use { ... }** sobre un objeto que implementa AutoCloseable (como Connection, Statement o ResultSet en JDBC), se cierra automáticamente al salir del bloque, aunque haya excepciones en el interior.
+Para liberar estos recursos hay dos opciones:
+
+**1. Utilización de .use { ... }**
+
+Se recomienda utilizarlo si:
+
+- Estás trabajando con un recurso que implementa AutoCloseable (Connection, Statement, ResultSet, File, etc.).
+
+- Solo necesitas abrir, usar y cerrar el recurso de forma automática.
+
+- No necesitas lógica compleja de manejo de excepciones dentro del mismo bloque.
+
+Ventajas:
+
+- Código más limpio y legible.
+
+- Cierra automáticamente el recurso aunque ocurra una excepción.
+
+- Evita errores de olvidar close().
+
+
+
+**2. Usar try–catch–finally manual**
+
+Cuándo:
+
+- No estás en Kotlin o no puedes usar .use.
+
+- Necesitas capturar y manejar excepciones dentro del mismo método.
+
+- Necesitas lógica extra antes o después de cerrar el recurso (por ejemplo, reintentos, logging detallado, liberar múltiples recursos en un orden específico).
+
+- Estás trabajando en un proyecto que sigue un estilo más clásico de Java.
+
+
+
 
 A continuación se muestra un **ejemplo con .use (sin necesidad de closeConnection)** que utiliza la función `getConnection` declarada en **PlantasBD.kt** para abrir la conexión de forma que:
 
