@@ -138,7 +138,7 @@ Una de las ventajas de trabajar de esta forma es que evitas repetir código para
 
 También es muy recomendable utilizar los bloques **try-catch-finally** para capturar posibles errores y excepciones.
 
-Un ejemplo del objeto que maneja la conexión podría ser el siguiente:
+Un ejemplo del objeto que maneja la conexión (**PlantasBD.kt**) podría ser el siguiente:
 
 ``` kotlin
 import java.io.File
@@ -146,7 +146,7 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
 
-object BD {
+object PlantasBD {
     // Ruta al archivo de base de datos SQLite
     private val dbPath = "datos/plantas.sqlite"
     private val dbFile = File(dbPath)
@@ -170,7 +170,7 @@ object BD {
         } ?: false
     }
 
-    // Cerrar conexión
+    // Cerrar conexión (para los casos en los que no se utiliza .use)
     fun closeConnection(conn: Connection?) {
         try {
             conn?.close()
@@ -186,10 +186,10 @@ De esta forma, cuando el programa necesite acceder a la BD llamará a la funció
 
 ``` kotlin
 fun main() {
-    val conn = BD.getConnection()
+    val conn = PlantasBD.getConnection()
     if (conn != null) {
         println("Conectado a la BD correctamente.")
-        BD.closeConnection(conn)
+        PlantasBD.closeConnection(conn)
     }
 }
 ```
