@@ -128,15 +128,13 @@ fun main() {
 
 
 
-<span class="mi_h2">Buenas prácticas</span>
+<span class="mi_h2">Organización del código</span>
 
-Una buena páctica es **cerrar la conexión a la base de datos** después de realizar operaciones sobre ella para que permanezca abierta el mínimo tiempo posible. Una forma de conseguir esto es tener las funciones de conexión y desconexión en un objeto separado. 
-
-Además, otra ventaja de trabajar así es que si la base de datos cambia de ubicación, solo habrá que actualizar la ruta dentro del código del objeto que maneja la conexión y no en varios sitios del programa. 
+Cuando se trabaja con bases de datos, una buena opción para organizar el código es tener un objeto que maneje la conexión. Una de las ventajas de trabajar de esta forma es que si la base de datos cambia de ubicación, solo habrá que actualizar la ruta dentro del código de este objeto no en varios sitios del programa.
 
 También es muy recomendable utilizar los bloques **try-catch-finally** para capturar posibles errores y excepciones.
 
-Un ejemplo del código podría ser el siguiente:
+Un ejemplo del objeto que maneja la conexión podría ser el siguiente:
 
 ``` kotlin
 import java.io.File
