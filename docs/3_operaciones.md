@@ -44,9 +44,9 @@ Estos recursos no se liberan automáticamente cuando se termina su uso (especial
 - Degradación del rendimiento.
 - Errores inesperados en la aplicación.
 
-En Kotlin, cuando usas **.use { ... }** sobre un objeto que implementa AutoCloseable (como Connection, Statement o ResultSet en JDBC), se cierra automáticamente al salir del bloque, aunque haya excepciones en el interior.
+En Kotlin, cuando utilizas **.use { ... }** sobre un objeto que implementa AutoCloseable (como Connection, Statement o ResultSet en JDBC), se cierra automáticamente al salir del bloque, aunque haya excepciones en el interior.
 
-**Ejemplo con .use (sin necesidad de closeConnection):** Este ejemplo utiliza la función `getConnection` declarada en el fichero `BD.kt` para abrir la conexión de forma que:
+A continuación se muestra un **ejemplo con .use (sin necesidad de closeConnection)** que utiliza la función `getConnection` declarada en **PlantasBD.kt** para abrir la conexión de forma que:
 
 - **conn.use { ... }** cierra la conexión automáticamente al final del bloque.
 
@@ -73,23 +73,51 @@ fun main() {
     Prueba el código de ejemplo y verifica que funciona correctemente.
 
 
-Si no utilizas **use {}** en Kotlin (o try-with-resources en Java), entonces debes cerrar manualmente cada uno de los recursos abiertos (ResultSet, Statement y Connection) usando .**close()**, y normalmente deberías hacerlo dentro de un bloque **finally** para garantizar su cierre incluso si ocurre un error. El orden correcto de cierre es del más interno al más externo.
+Si no utilizas **use {}** en Kotlin, entonces debes cerrar manualmente cada uno de los recursos abiertos (ResultSet, Statement y Connection) utilizando **close()**, y normalmente deberías hacerlo dentro de un bloque **finally** para garantizar su cierre incluso si ocurre un error. El orden correcto de cierre es del más interno al más externo. A continuación tienes un ejemplo equivalente al ejemplo anterior pero sin utilizar **.use**:
 
+``` kotlin
+fun main() {
+    var conn: Connection? = null
+    var stmt: Statement? = null
+    var rs: ResultSet? = null
 
+    try {
+        conn = DatabasePlantas.getConnection()
+        if (conn != null) {
+            println("Conectado a la BD")
 
-FALTA ejemplo
+            stmt = conn.createStatement()
+            rs = stmt.executeQuery("SELECT * FROM plantas")
+
+            while (rs.next()) {
+                println("${rs.getString("nombre_comun")}")
+            }
+        } else {
+            println("No se pudo conectar")
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    } finally {
+        try {
+            rs?.close()
+            stmt?.close()
+            conn?.close()
+            println("Conexión cerrada correctamente")
+        } catch (e: Exception) {
+            println("Error al cerrar los recursos: ${e.message}")
+        }
+    }
+}
+```
+
 
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
 
 
-Otra buena práctica es separar en objetos de acceso a datos (Data Access Object o DAO) las diferentes operaciones CRUD:
-- C → Create (Crear / Insertar un nuevo registro)
-- R → Read (Leer / Consultar registros)
-- U → Update (Actualizar un registro existente)
-- D → Delete (Eliminar un registro)
+**Objetos de acceso a datos (DAO)**
+Otra buena práctica es crear un objeto para manejar las diferentes operaciones CRUD de acceso a los datos. Es el Data Access Object (DAO) y algunas de las ventajas de utilizar estos objetos son las siguientes:
 
-**Ventajas de usar DAO**
 - Organización: todo el código SQL está en un único lugar.
 - Reutilización: puedes llamar a PlantaDAO.listarPlantas() desde distintos sitios sin repetir la consulta.
 - Mantenibilidad: si cambia la base de datos, solo tocas el DAO.
@@ -100,7 +128,7 @@ Otra buena práctica es separar en objetos de acceso a datos (Data Access Object
 
 El siguiente ejemplo es el DAO para la tabla `plantas` de la BD `plantas.sqlite` en la que se utiliza el código de conexión del objeto **PlantasBD.kt**.
 
-Se declaran funciones para leer la información de la tabla, añdir registros nuevos, modificar la información existenete y borrarla. Para ello se utiliza un data class **Planta.kt** con la estructura siguiente:
+En el ejemplo se declaran funciones para leer la información de la tabla, añdir registros nuevos, modificar la información existenete y borrarla. Para ello se utiliza un data class **Planta.kt** con la estructura siguiente (misma estructura que la tabla de la BD):
 
 ``` kotlin
 data class Planta(
@@ -114,11 +142,11 @@ data class Planta(
 
 El código del archivo **PlantasDAO.kt** es el siguiente:
 ``` kotlin
-object PlantaDAO {
+object PlantasDAO {
 
     fun listarPlantas(): List<Planta> {
         val lista = mutableListOf<Planta>()
-        DatabasePlantas.getConnection()?.use { conn ->
+        PlantasBD.getConnection()?.use { conn ->
             conn.createStatement().use { stmt ->
                 val rs = stmt.executeQuery("SELECT * FROM plantas")
                 while (rs.next()) {
@@ -133,10 +161,11 @@ object PlantaDAO {
                     )
                 }
             }
-        } ?: println("❌ No se pudo establecer la conexión.")
+        } ?: println("No se pudo establecer la conexión.")
         return lista
     }
 
+    // Consultar planta por ID
     fun consultarPlantaPorId(id: Int): Planta? {
         var planta: Planta? = null
         PlantasBD.getConnection()?.use { conn ->
@@ -158,7 +187,7 @@ object PlantaDAO {
     }
 
     fun insertarPlanta(planta: Planta) {
-        DatabasePlantas.getConnection()?.use { conn ->
+        PlantasBD.getConnection()?.use { conn ->
             conn.prepareStatement(
                 "INSERT INTO plantas(nombre_comun, nombre_cientifico, frecuencia_riego, altura) VALUES (?, ?, ?, ?)"
             ).use { pstmt ->
@@ -167,17 +196,17 @@ object PlantaDAO {
                 pstmt.setInt(3, planta.frecuenciaRiego)
                 pstmt.setDouble(4, planta.altura)
                 pstmt.executeUpdate()
-                println("🌱 Planta '${planta.nombreComun}' insertada con éxito.")
+                println("Planta '${planta.nombreComun}' insertada con éxito.")
             }
-        } ?: println("❌ No se pudo establecer la conexión.")
+        } ?: println("No se pudo establecer la conexión.")
     }
 
     fun actualizarPlanta(planta: Planta) {
         if (planta.id == null) {
-            println("⚠️ No se puede actualizar una planta sin id.")
+            println("No se puede actualizar una planta sin id.")
             return
         }
-        DatabasePlantas.getConnection()?.use { conn ->
+        PlantasBD.getConnection()?.use { conn ->
             conn.prepareStatement(
                 "UPDATE plantas SET nombre_comun = ?, nombre_cientifico = ?, frecuencia_riego = ?, altura = ? WHERE id = ?"
             ).use { pstmt ->
@@ -188,26 +217,26 @@ object PlantaDAO {
                 pstmt.setInt(5, planta.id)
                 val filas = pstmt.executeUpdate()
                 if (filas > 0) {
-                    println("✏️ Planta con id=${planta.id} actualizada con éxito.")
+                    println("Planta con id=${planta.id} actualizada con éxito.")
                 } else {
-                    println("⚠️ No se encontró ninguna planta con id=${planta.id}.")
+                    println("No se encontró ninguna planta con id=${planta.id}.")
                 }
             }
-        } ?: println("❌ No se pudo establecer la conexión.")
+        } ?: println("No se pudo establecer la conexión.")
     }
 
     fun eliminarPlanta(id: Int) {
-        DatabasePlantas.getConnection()?.use { conn ->
+        PlantasBD.getConnection()?.use { conn ->
             conn.prepareStatement("DELETE FROM plantas WHERE id = ?").use { pstmt ->
                 pstmt.setInt(1, id)
                 val filas = pstmt.executeUpdate()
                 if (filas > 0) {
-                    println("🗑️ Planta con id=$id eliminada correctamente.")
+                    println("Planta con id=$id eliminada correctamente.")
                 } else {
-                    println("⚠️ No se encontró ninguna planta con id=$id.")
+                    println("No se encontró ninguna planta con id=$id.")
                 }
             }
-        } ?: println("❌ No se pudo establecer la conexión.")
+        } ?: println("No se pudo establecer la conexión.")
     }
 }
 ```
@@ -269,165 +298,11 @@ fun main() {
 
 
 
-<!-- 
-**Ejemplo 2 - Consulta con parámetros:** El siguiente ejemplo consulta la información de la planta cuyo ID coincide con el pasado como parámetro.
-
-``` kotlin
-fun consultarPlantaPorId(id: Int) {
-    val conn = BD.getConnection()
-    if (conn != null) {
-        val sql = "SELECT * FROM plantas WHERE id = ?"
-        try {
-            conn.prepareStatement(sql).use { stmt ->
-                stmt.setInt(1, id)
-
-                stmt.executeQuery().use { rs ->
-                    if (rs.next()) {
-                        val idPlanta = rs.getInt("id")
-                        val nombreComun = rs.getString("nombre_comun")
-                        val nombreCientifico = rs.getString("nombre_cientifico")
-                        val frecuenciaRiego = rs.getInt("frecuencia_riego")
-                        val altura = rs.getDouble("altura")
-
-                        println("Planta encontrada:")
-                        println("- $idPlanta: $nombreComun ($nombreCientifico). Frecuencia de riego: $frecuenciaRiego días, altura: $altura m")
-                    } else {
-                        println("No se encontró ninguna planta con id=$id")
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            println("Error: ${e.message}")
-        } finally {
-            BD.closeConnection(conn)
-        }
-    } else {
-        println("No se pudo establecer la conexión a la base de datos.")
-    }
-}
-``` 
-
-!!! success "Realiza lo siguiente" 
-    Prueba el código de ejemplo y verifica que funciona correctemente.
-
-!!! warning "Práctica 5: Conecta a tu base de datos" 
-    Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
-**Ejemplo 3 - INSERT:** El siguiente ejemplo añade un registro a la tabla de la BD.
-
-``` kotlin
-fun insertarPlanta() {
-    val conn = BD.getConnection()
-    if (conn != null) {
-        //datos de ejemplo a insertar
-        val nombreComun = "Palmera"
-        val nombreCientifico = "Arecaceae"
-        val frecuenciaRiego = 2
-        val altura = 8.5
-
-        val sql = "INSERT INTO plantas (nombre_comun, nombre_cientifico, frecuencia_riego, altura) VALUES (?, ?, ?, ?)"
-        try {
-            conn.prepareStatement(sql).use { stmt ->
-                stmt.setString(1, nombreComun)
-                stmt.setString(2, nombreCientifico)
-                stmt.setInt(3, frecuenciaRiego)
-                stmt.setDouble(4, altura)
-                stmt.executeUpdate()
-            }
-        } catch (e: Exception) {
-            println("Error: ${e.message}")
-        } finally {
-            println("Planta insertada correctamente")
-            BD.closeConnection(conn)
-        }
-    } else {
-        println("No se pudo establecer la conexión a la base de datos.")
-    }
-}
-``` 
-
-!!! success "Realiza lo siguiente" 
-    Prueba el código de ejemplo y verifica que funciona correctemente.
-
-!!! warning "Práctica 6: Conecta a tu base de datos" 
-    Replica el ejemplo anterior para que funcione con tu base de datos.
+<!--
 
 
-**Ejemplo 4 - UPDATE:**  El siguiente ejemplo actualiza la `altura` de una planta identificada por su `id` (el id de la planta a actualizar y la nueva altura se piden por consola antes de llamar a la función).
-
-``` kotlin
-fun actualizarPlanta(id: Int, altura: Double) {
-    val conn = BD.getConnection()
-    if (conn != null) {
-        val sql = "UPDATE plantas SET altura = ? WHERE id = ?"
-        try {
-            conn.prepareStatement(sql).use { stmt ->
-                stmt.setDouble(1, altura)
-                stmt.setInt(2, id)
-
-                stmt.executeUpdate()
-            }
-        } catch (e: Exception) {
-            println("Error: ${e.message}")
-        } finally {
-            println("Planta actualizada correctamente")
-            BD.closeConnection(conn)
-        }
-    } else {
-        println("No se pudo establecer la conexión a la base de datos.")
-    }
-}
-```
-
-!!! success "Realiza lo siguiente" 
-    Prueba el código de ejemplo y verifica que funciona correctemente.
-
-!!! warning "Práctica 7: Conecta a tu base de datos" 
-    Replica el ejemplo anterior para que funcione con tu base de datos.
-
-
-**Ejemplo 5 - DELETE:** El siguiente ejemplo elimina una planta identificada por su `id` que se pasa por parámetro a la función.
-
-``` kotlin
-fun eliminarPlanta(id: Int) {
-    val conn = BD.getConnection()
-    if (conn != null) {
-        val sql = "DELETE FROM plantas WHERE id = ?"
-        try {
-            conn.prepareStatement(sql).use { stmt ->
-                stmt.setInt(1, id)
-                stmt.executeUpdate()
-            }
-        } catch (e: Exception) {
-            println("Error: ${e.message}")
-        } finally {
-            println("Planta eliminada correctamente")
-            BD.closeConnection(conn)
-        }
-    } else {
-    println("No se pudo establecer la conexión a la base de datos.")
-    }
-}
-```
-
-!!! success "Realiza lo siguiente" 
-    Prueba el código de ejemplo y verifica que funciona correctemente.
-
-!!! warning "Práctica 8: Conecta a tu base de datos" 
-    Replica el ejemplo anterior para que funcione con tu base de datos.
-
-
--->
-
-
-
-
-
-
-
-
-FALTA a PARTIR DE AQUÍ
 
 **Consultas complejas: JOIN, filtros y ordenaciones**
 
@@ -472,91 +347,7 @@ FALTA a PARTIR DE AQUÍ
 
 
 
-
-**Ejemplos** para cerrar recursos abiertos sin **use()**, de forma manual y con el bloque **try-catch-finally**
-
-**Ejemplo_cierre_manual.kt:** Cierra los recurso con close()
-
-        package SQLite
-        import java.sql.DriverManager
-        import java.sql.Connection
-        import java.sql.PreparedStatement
-        import java.sql.ResultSet
-
-        fun main() {
-            val dbPath = "src/main/resources/Tienda.sqlite"
-            val dbFile = java.io.File(dbPath)
-            val url = "jdbc:sqlite:${dbFile.absolutePath}"
-
-            val conn: Connection = DriverManager.getConnection(url)
-            val sql = "SELECT cod_a, descrip, preu, stock, stock_min FROM article"
-            val stmt: PreparedStatement = conn.prepareStatement(sql)
-            val rs: ResultSet = stmt.executeQuery()
-
-            println("Artículos:")
-            println("Código\tDescripción\tPrecio\tStock\tStock mín.")
-
-            while (rs.next()) {
-                val codA = rs.getString("cod_a")
-                val descrip = rs.getString("descrip")
-                val preu = rs.getDouble("preu")
-                val stock = rs.getInt("stock")
-                val stockMin = rs.getInt("stock_min")
-
-                println("$codA\t$descrip\t$preu\t$stock\t$stockMin")
-            }
-
-            rs.close()
-            stmt.close()
-            conn.close()
-        }
-
-
-**Ejemplo_cierre_try_catch.kt:** Cierra los reursos con try-catch-finally
-
-        package SQLite
-        import java.sql.Connection
-        import java.sql.DriverManager
-        import java.sql.PreparedStatement
-        import java.sql.ResultSet
-
-        fun main() {
-            val dbPath = "src/main/resources/Tienda.sqlite"
-            val dbFile = java.io.File(dbPath)
-            val url = "jdbc:sqlite:${dbFile.absolutePath}"
-
-            var conn: Connection? = null
-            var stmt: PreparedStatement? = null
-            var rs: ResultSet? = null
-
-            try {
-                conn = DriverManager.getConnection(url)
-                val sql = "SELECT cod_a, descrip, preu, stock, stock_min FROM article"
-                stmt = conn.prepareStatement(sql)
-                rs = stmt.executeQuery()
-
-                println("Artículos:")
-                println("Código\tDescripción\tPrecio\tStock\tStock mín.")
-
-                while (rs.next()) {
-                    val codA = rs.getString("cod_a")
-                    val descrip = rs.getString("descrip")
-                    val preu = rs.getDouble("preu")
-                    val stock = rs.getInt("stock")
-                    val stockMin = rs.getInt("stock_min")
-
-                    println("$codA\t$descrip\t$preu\t$stock\t$stockMin")
-                }
-
-            } catch (e: Exception) {
-                println("Error al acceder a la base de datos: ${e.message}")
-            } finally {
-                try { rs?.close() } catch (e: Exception) { /* Ignorar */ }
-                try { stmt?.close() } catch (e: Exception) { /* Ignorar */ }
-                try { conn?.close() } catch (e: Exception) { /* Ignorar */ }
-            }
-        }
-
+-->
 
 
 
@@ -668,3 +459,4 @@ El siguiente ejemplo elimina el instituto de prueba insertado.
 
 
 -->
+
