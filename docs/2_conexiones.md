@@ -195,9 +195,8 @@ fun main() {
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
       
-!!! warning "Práctica 3: Optimiza el manejo de la BD de tu aplicación" 
-    1. Crea el archivo con las funciones de conexión y desconexión a la BD.
-    2. Comprueba desde el main que el programa se conecta a la BD correctamente y luego cierra la conexión.
+!!! warning "Práctica 3: Organiza el código de tu aplicación" 
+    Replica el ejemplo anterior para que funcione con tu base de datos.
 
 
 
