@@ -22,7 +22,9 @@ Ejemplo de tabla `facturas`:
 | 1          | 1          | 2025-09-18  |
 | 2          | 1          | 2025-09-18   |
 
-El lenguaje **SQL (Structured Query Language)** se utiliza para gestionar bases de datos relacionales ya que gracias a él se pueden crear, modificar, consultar y eliminar datos de forma sencilla y estandarizada, lo que lo convierte en la opción preferida para una amplia variedad de aplicaciones empresariales y tecnológicas. Algunos de sus comandos básicos son:
+El lenguaje **SQL (Structured Query Language)** se utiliza para gestionar bases de datos relacionales ya que gracias a él se pueden crear, modificar, consultar y eliminar datos de forma sencilla y estandarizada. Es lo que se denomina **CRUD**, es decir, **C**reate (crear), **R**ead (Leer), **U**pdate (Actualizar) y **D**elete (Borrar). Esto lo convierte en la opción preferida para una amplia variedad de aplicaciones empresariales y tecnológicas. 
+
+Algunos de sus comandos básicos son:
 
 - `SELECT`: consultar datos
 - `INSERT`: añadir registros
@@ -30,8 +32,7 @@ El lenguaje **SQL (Structured Query Language)** se utiliza para gestionar bases 
 - `DELETE`: eliminar registros
 - `CREATE`: definir tablas, claves, relaciones, etc.
 
-Es lo que se denomina **CRUD**, es decir, **C**reate (crear), **R**ead (Leer), **U**pdate (Actualizar) y **D**elete (Borrar). 
-
+ 
 Un ejemplo sencillo de consulta podría ser:
 
     SELECT nombre FROM clientes WHERE ciudad = 'Valencia';
