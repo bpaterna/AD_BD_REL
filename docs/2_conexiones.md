@@ -136,7 +136,7 @@ Una de las ventajas de trabajar de esta forma es que evitas repetir código para
 
 También es muy recomendable utilizar los bloques **try-catch-finally** para capturar posibles errores y excepciones.
 
-Un ejemplo del objeto que maneja la conexión, ene ste caso llamado **PlantasBD.kt** podría ser el siguiente:
+Un ejemplo del objeto que maneja la conexión, en este caso llamado **PlantasBD.kt**, podría ser el siguiente:
 
 ``` kotlin
 import java.io.File
