@@ -89,7 +89,7 @@ dependencies {
 
 <span class="mi_h2">Conexión a SQLite</span>
 
-A continuación se describe cómo conectar a una base de datos **SQLite** llamada **plantas.sqlite** que se encuentra en la carpeta **datos** dentro de un proyecto en **Kotlin**.
+A continuación se describe cómo conectar a una base de datos **SQLite** llamada `plantas.sqlite` que se encuentra en la carpeta `datos` dentro de un proyecto en **Kotlin**.
 
 
 ``` kotlin
@@ -130,15 +130,13 @@ fun main() {
 
 <span class="mi_h2">Organización del código</span>
 
-Cuando se trabaja con bases de datos, una buena opción para organizar el código es tener el código que maneja toda la lógica de BD en un mismo sitio.
-
-En Kotlin, se puede crear un objeto con funciones para que estén disponibles de forma directa en otras partes del programa.
+Cuando se trabaja con bases de datos, una buena opción para organizar el código es tener el código que maneja toda la lógica de BD en un mismo sitio En Kotlin se puede crear un objeto con funciones para que estén disponibles de forma directa en otras partes del programa.
 
 Una de las ventajas de trabajar de esta forma es que evitas repetir código para abrir y cerrar conexiones y, además, si la base de datos cambia de ubicación, solo habrá que actualizar la ruta dentro del código de este objeto no en varios sitios.
 
 También es muy recomendable utilizar los bloques **try-catch-finally** para capturar posibles errores y excepciones.
 
-Un ejemplo del objeto que maneja la conexión (**PlantasBD.kt**) podría ser el siguiente:
+Un ejemplo del objeto que maneja la conexión, ene ste caso llamado **PlantasBD.kt** podría ser el siguiente:
 
 ``` kotlin
 import java.io.File
