@@ -130,7 +130,11 @@ fun main() {
 
 <span class="mi_h2">Organización del código</span>
 
-Cuando se trabaja con bases de datos, una buena opción para organizar el código es tener un objeto que maneje la conexión. Una de las ventajas de trabajar de esta forma es que si la base de datos cambia de ubicación, solo habrá que actualizar la ruta dentro del código de este objeto no en varios sitios del programa.
+Cuando se trabaja con bases de datos, una buena opción para organizar el código es tener el código que maneja toda la lógica de BD en un mismo sitio.
+
+En Kotlin, se puede crear un objeto con funciones para que estén disponibles de forma directa en otras partes del programa.
+
+Una de las ventajas de trabajar de esta forma es que evitas repetir código para abrir y cerrar conexiones y, además, si la base de datos cambia de ubicación, solo habrá que actualizar la ruta dentro del código de este objeto no en varios sitios.
 
 También es muy recomendable utilizar los bloques **try-catch-finally** para capturar posibles errores y excepciones.
 
