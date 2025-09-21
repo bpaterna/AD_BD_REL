@@ -98,7 +98,7 @@ import java.sql.DriverManager
 
 fun main() {
     // Ruta al archivo de base de datos SQLite
-    val dbPath = "src/main/resources/plantas.sqlite"
+    val dbPath = "datos/plantas.sqlite"
     val dbFile = File(dbPath)
     println("Ruta de la BD: ${dbFile.absolutePath}")
     val url = "jdbc:sqlite:${dbFile.absolutePath}"
