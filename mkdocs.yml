@@ -24,7 +24,6 @@ nav:
     - 3. Operaciones con la BD: 3_operaciones.md
   - Material adicional:
     - DB Browser: db_browser_sqlite.md
-    - DBeaver: dbeaver.md
 markdown_extensions:
   - attr_list
   - admonition
