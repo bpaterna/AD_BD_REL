@@ -81,7 +81,7 @@ Cuándo:
 
 <span class="mis_ejemplos">Ejemplo 3: Utilización de .use</span> 
 
-A continuación se muestra un **ejemplo con .use (sin necesidad de closeConnection)** que utiliza la función `getConnection` declarada en **PlantasBD.kt** para abrir la conexión de forma que:
+A continuación se muestra un **ejemplo con .use (sin necesidad de closeConnection)** que utiliza la función `getConnection` declarada en **FlorabotanicaBD.kt** para abrir la conexión de forma que:
 
 - **conn.use { ... }** cierra la conexión automáticamente al final del bloque.
 
@@ -91,7 +91,7 @@ A continuación se muestra un **ejemplo con .use (sin necesidad de closeConnecti
 
 ``` kotlin
 fun main() {
-    PlantasBD.getConnection()?.use { conn ->
+    FlorabotanicaBD.getConnection()?.use { conn ->
         println("Conectado a la BD")
 
         conn.createStatement().use { stmt ->
@@ -119,7 +119,7 @@ fun main() {
     var rs: ResultSet? = null
 
     try {
-        conn = DatabasePlantas.getConnection()
+        conn = FlorabotanicaBD.getConnection()
         if (conn != null) {
             println("Conectado a la BD")
 
@@ -156,7 +156,7 @@ fun main() {
 Otra buena práctica es crear un objeto para manejar las diferentes operaciones CRUD de acceso a los datos. Es el Data Access Object (DAO) y algunas de las ventajas de utilizar estos objetos son las siguientes:
 
 - Organización: todo el código SQL está en un único lugar.
-- Reutilización: puedes llamar a PlantaDAO.listarPlantas() desde distintos sitios sin repetir la consulta.
+- Reutilización: puedes llamar a PlantasDAO.listarPlantas() desde distintos sitios sin repetir la consulta.
 - Mantenibilidad: si cambia la base de datos, solo tocas el DAO.
 - Claridad: el resto de tu app se lee mucho más limpio, sin SQL mezclado.
 
@@ -164,37 +164,40 @@ Otra buena práctica es crear un objeto para manejar las diferentes operaciones 
 
 <span class="mis_ejemplos">Ejemplo 5: DAO en SQlite</span> 
 
-El siguiente ejemplo es el DAO para la tabla `plantas` de la BD `plantas.sqlite` en la que se utiliza el código de conexión del objeto **PlantasBD.kt**.
+El siguiente ejemplo es el DAO para la tabla `plantas` de la BD `florabotanica.sqlite` en la que se utiliza el código de conexión del objeto **FlorabotanicaBD.kt**. La estructura de la tabla es la siguiente:
+
+![Imagen 1](img/3_plantas.png)
 
 En el ejemplo se declaran funciones para leer la información de la tabla, añdir registros nuevos, modificar la información existenete y borrarla. Para ello se utiliza un data class **Planta.kt** con la estructura siguiente (misma estructura que la tabla de la BD):
 
 ``` kotlin
 data class Planta(
-    val id: Int? = null, // lo genera SQLite automáticamente
+    val id_planta: Int? = null, // lo genera SQLite automáticamente
     val nombreComun: String,
     val nombreCientifico: String,
-    val frecuenciaRiego: Int,
-    val altura: Double
+    val stock: Int,
+    val precio: Double
 )
 ```
 
 El código del archivo **PlantasDAO.kt** es el siguiente:
+
 ``` kotlin
 object PlantasDAO {
 
     fun listarPlantas(): List<Planta> {
         val lista = mutableListOf<Planta>()
-        PlantasBD.getConnection()?.use { conn ->
+        FlorabotanicaBD.getConnection()?.use { conn ->
             conn.createStatement().use { stmt ->
                 val rs = stmt.executeQuery("SELECT * FROM plantas")
                 while (rs.next()) {
                     lista.add(
                         Planta(
-                            id = rs.getInt("id"),
+                            id_planta = rs.getInt("id_planta"),
                             nombreComun = rs.getString("nombre_comun"),
                             nombreCientifico = rs.getString("nombre_cientifico"),
-                            frecuenciaRiego = rs.getInt("frecuencia_riego"),
-                            altura = rs.getDouble("altura")
+                            stock = rs.getInt("stock"),
+                            precio = rs.getDouble("precio")
                         )
                     )
                 }
@@ -203,20 +206,21 @@ object PlantasDAO {
         return lista
     }
 
+
     // Consultar planta por ID
     fun consultarPlantaPorId(id: Int): Planta? {
         var planta: Planta? = null
-        PlantasBD.getConnection()?.use { conn ->
-            conn.prepareStatement("SELECT * FROM plantas WHERE id = ?").use { pstmt ->
+        FlorabotanicaBD.getConnection()?.use { conn ->
+            conn.prepareStatement("SELECT * FROM plantas WHERE id_planta = ?").use { pstmt ->
                 pstmt.setInt(1, id)
                 val rs = pstmt.executeQuery()
                 if (rs.next()) {
                     planta = Planta(
-                        id = rs.getInt("id"),
+                        id_planta = rs.getInt("id_planta"),
                         nombreComun = rs.getString("nombre_comun"),
                         nombreCientifico = rs.getString("nombre_cientifico"),
-                        frecuenciaRiego = rs.getInt("frecuencia_riego"),
-                        altura = rs.getDouble("altura")
+                        stock = rs.getInt("stock"),
+                        precio = rs.getDouble("precio")
                     )
                 }
             }
@@ -224,15 +228,16 @@ object PlantasDAO {
         return planta
     }
 
+
     fun insertarPlanta(planta: Planta) {
-        PlantasBD.getConnection()?.use { conn ->
+        FlorabotanicaBD.getConnection()?.use { conn ->
             conn.prepareStatement(
-                "INSERT INTO plantas(nombre_comun, nombre_cientifico, frecuencia_riego, altura) VALUES (?, ?, ?, ?)"
+                "INSERT INTO plantas(nombre_comun, nombre_cientifico, stock, precio) VALUES (?, ?, ?, ?)"
             ).use { pstmt ->
                 pstmt.setString(1, planta.nombreComun)
                 pstmt.setString(2, planta.nombreCientifico)
-                pstmt.setInt(3, planta.frecuenciaRiego)
-                pstmt.setDouble(4, planta.altura)
+                pstmt.setInt(3, planta.stock)
+                pstmt.setDouble(4, planta.precio)
                 pstmt.executeUpdate()
                 println("Planta '${planta.nombreComun}' insertada con éxito.")
             }
@@ -240,32 +245,32 @@ object PlantasDAO {
     }
 
     fun actualizarPlanta(planta: Planta) {
-        if (planta.id == null) {
+        if (planta.id_planta == null) {
             println("No se puede actualizar una planta sin id.")
             return
         }
-        PlantasBD.getConnection()?.use { conn ->
+        FlorabotanicaBD.getConnection()?.use { conn ->
             conn.prepareStatement(
-                "UPDATE plantas SET nombre_comun = ?, nombre_cientifico = ?, frecuencia_riego = ?, altura = ? WHERE id = ?"
+                "UPDATE plantas SET nombre_comun = ?, nombre_cientifico = ?, stock = ?, precio = ? WHERE id_planta = ?"
             ).use { pstmt ->
                 pstmt.setString(1, planta.nombreComun)
                 pstmt.setString(2, planta.nombreCientifico)
-                pstmt.setInt(3, planta.frecuenciaRiego)
-                pstmt.setDouble(4, planta.altura)
-                pstmt.setInt(5, planta.id)
+                pstmt.setInt(3, planta.stock)
+                pstmt.setDouble(4, planta.precio)
+                pstmt.setInt(5, planta.id_planta)
                 val filas = pstmt.executeUpdate()
                 if (filas > 0) {
-                    println("Planta con id=${planta.id} actualizada con éxito.")
+                    println("Planta con id=${planta.id_planta} actualizada con éxito.")
                 } else {
-                    println("No se encontró ninguna planta con id=${planta.id}.")
+                    println("No se encontró ninguna planta con id=${planta.id_planta}.")
                 }
             }
         } ?: println("No se pudo establecer la conexión.")
     }
 
     fun eliminarPlanta(id: Int) {
-        PlantasBD.getConnection()?.use { conn ->
-            conn.prepareStatement("DELETE FROM plantas WHERE id = ?").use { pstmt ->
+        FlorabotanicaBD.getConnection()?.use { conn ->
+            conn.prepareStatement("DELETE FROM plantas WHERE id_planta = ?").use { pstmt ->
                 pstmt.setInt(1, id)
                 val filas = pstmt.executeUpdate()
                 if (filas > 0) {
@@ -277,6 +282,7 @@ object PlantasDAO {
         } ?: println("No se pudo establecer la conexión.")
     }
 }
+
 ```
 
 La llamada a estas funciones desde **main.kt** podría ser:
@@ -287,13 +293,13 @@ fun main() {
     // Listar todas las plantas
     println("Lista de plantas:")
     PlantasDAO.listarPlantas().forEach {
-        println(" - [${it.id}] ${it.nombreComun} (${it.nombreCientifico}), riego cada ${it.frecuenciaRiego} días, altura: ${it.altura} m")
+        println(" - [${it.id_planta}] ${it.nombreComun} (${it.nombreCientifico}), stock ${it.stock} unidades, precio: ${it.precio} €")
     }
 
     // Consultar planta por ID
     val planta = PlantasDAO.consultarPlantaPorId(3)
     if (planta != null) {
-        println("Planta encontrada: [${planta.id}] ${planta.nombreComun} (${planta.nombreCientifico}), riego cada ${planta.frecuenciaRiego} días, altura: ${planta.altura} m")
+        println("Planta encontrada: [${planta.id_planta}] ${planta.nombreComun} (${planta.nombreCientifico}), stock ${planta.stock} unidades, precio: ${planta.precio} €")
     } else {
         println("No se encontró ninguna planta con ese ID.")
     }
@@ -303,25 +309,29 @@ fun main() {
         Planta(
             nombreComun = "Palmera",
             nombreCientifico = "Arecaceae",
-            frecuenciaRiego = 2,
-            altura = 8.5
+            stock = 2,
+            precio = 50.5
         )
     )
 
     // Actualizar planta con id=1
     PlantasDAO.actualizarPlanta(
         Planta(
-            id = 1,
+            id_planta = 1,
             nombreComun = "Aloe Arborescens",
             nombreCientifico = "Aloe barbadensis miller",
-            frecuenciaRiego = 5,
-            altura = 0.8
+            stock = 20,
+            precio = 5.8
         )
     )
 
     // Eliminar planta con id=2
     PlantasDAO.eliminarPlanta(2)
 }
+
+
+
+
 ```
 
 !!! success "Realiza lo siguiente" 
@@ -329,8 +339,6 @@ fun main() {
 
 !!! warning "Práctica 4: Trabaja con tu base de datos" 
     Replica el ejemplo anterior para que funcione con tu base de datos.
-
-
 
 
 
