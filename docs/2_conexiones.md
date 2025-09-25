@@ -50,34 +50,29 @@ Las principales formas de conectarse a una base de datos son las siguientes:
 | Aplicaciones móviles                   | Apps Android/iOS que acceden a BD locales (como **SQLite**) o remotas (vía **Firebase**, API REST, etc.). |
 | Herramientas de integración de datos   | Software como **Talend**, **Pentaho**, **Apache Nifi** para migrar, transformar o sincronizar datos entre sistemas. |
 
-De todas las formas posibles de interactuar con una base de datos, nos vamos a centrar en el uso de **conectores JDBC (Java Database Connectivity)**. **JDBC** es una API estándar de Java (y compatible con Kotlin) que permite conectarse a una BD, enviar instrucciones SQL y procesar los resultados manualmente. Es el método de más bajo nivel, pero ofrece un control total sobre lo que ocurre en la BD. Es ideal para aprender los fundamentos del acceso a datos y tener control total y aprenderlo ayuda a entender mejor lo que hace un ORM por debajo. Sus principales características son:
+De todas las formas posibles de interactuar con una base de datos, nos vamos a centrar en el uso de **conectores JDBC (Java Database Connectivity)**. Una aplicación (escrita en Kotlin, Java u otro lenguaje) puede leer, insertar o modificar información almacenada en una base de datos relacional si previamente se ha conectado al sitema gestor de base de datos (SGBD). **JDBC** es una API estándar de Java (y compatible con Kotlin) que permite conectarse a una BD, enviar instrucciones SQL y procesar los resultados manualmente. Es el método de más bajo nivel, pero ofrece un control total sobre lo que ocurre en la BD. Es ideal para aprender los fundamentos del acceso a datos y aprenderlo ayuda a entender mejor lo que hace un ORM por debajo. 
+
+Sus principales características son:
 
  - El programador escribe directamente las consultas SQL.
  - Requiere gestionar manualmente conexiones, sentencias y resultados.
  - Se necesita un driver específico (conector) para cada SGBD:
 
 
-**Algunos ejemplos de conectores**
-
-SGBD|	Conector (Driver JDBC)|	URL de conexión típica
-----|-------------------------|-----------------------
-PostgreSQL|	org.postgresql.Driver| jdbc:postgresql://host:puerto/basedatos
-MySQL / MariaDB|	com.mysql.cj.jdbc.Driver| jdbc:mysql://host:puerto/basedatos
-SQLite (embebido)|	org.sqlite.JDBC	|jdbc:sqlite:ruta_al_fichero
-
-Una aplicación (escrita en Kotlin, Java u otro lenguaje) puede leer, insertar o modificar información almacenada en una base de datos relacional si previamente se ha conectado al sitema gestor de base de datos (SGBD). **JDBC** (Java Database Connectivity) es la API básica de Java (conector) para conectarse a bases de datos relacionales y su sintaxis general es:
+A continuación se muestra su sintaxis general. Aunque puede variar según el SGBD con el que se trabaje. Por ejemplo en SQLite no se necesita usuario ni contraseña ya que es una base de datos local y embebida:
 
     jdbc:<gestor>://<host>:<puerto>/<nombre_base_datos>
 
-Aunque puede variar según el SGBD con el que se trabaje. Por ejemplo en SQLite no se necesita usuario ni contraseña ya que es una base de datos local y embebida. 
 
-SGBD|	URL de conexión
------------------------|---------------------
-PostgreSQL|	jdbc:postgresql://localhost:5432/plantas
-MySQL|	jdbc:mysql://localhost:3306/plantas
-SQLite|	jdbc:sqlite:plantas.sqlite
+**Algunos ejemplos de conectores según el SGBD**
 
-También dependiendo del SGBD será necesario utilizar un **conector JDBC** u otro. Para ello utilizaremos la herramienta **Gradle**, que permite automatizar la gestión de dependencias sin tener que configurar nada a mano añadiendo las líneas correspondientes en el fichero **build.gradle.kts**. A continuación se muestran las líneas para los SGBD PostgreSQL, MySQL y SQLite.
+SGBD|	Conector (Driver JDBC)|	URL de conexión típica 
+----|-------------------------|-----------------------
+PostgreSQL|	org.postgresql.Driver| jdbc:postgresql://host:puerto/nombreBD
+MySQL / MariaDB|	com.mysql.cj.jdbc.Driver| jdbc:mysql://host:puerto/nombreBD
+SQLite (embebido)|	org.sqlite.JDBC	|jdbc:sqlite:nombreBD
+
+También dependiendo del SGBD será necesario utilizar un **conector JDBC** u otro. Para ello indicaremos la dependencia adecuada en **Gradle** añadiendo las líneas correspondientes en el fichero **build.gradle.kts**. A continuación se muestran las líneas para los SGBD PostgreSQL, MySQL y SQLite.
 
 ```
 dependencies {
@@ -93,7 +88,7 @@ dependencies {
 
 <span class="mis_ejemplos">Ejemplo 1: Conexión a SQLite</span> 
 
-El siguiente ejemplo muestra como conectar a una base de datos **SQLite** llamada `plantas.sqlite` que se encuentra en la carpeta `datos` dentro de un proyecto en **Kotlin**.
+El siguiente ejemplo muestra como conectar a una base de datos **SQLite** llamada `florabotanica.sqlite` que se encuentra en la carpeta `datos` dentro de un proyecto en **Kotlin**.
 
 
 ``` kotlin
@@ -102,7 +97,7 @@ import java.sql.DriverManager
 
 fun main() {
     // Ruta al archivo de base de datos SQLite
-    val dbPath = "datos/plantas.sqlite"
+    val dbPath = "datos/florabotanica.sqlite"
     val dbFile = File(dbPath)
     println("Ruta de la BD: ${dbFile.absolutePath}")
     val url = "jdbc:sqlite:${dbFile.absolutePath}"
@@ -118,11 +113,11 @@ fun main() {
     1. Crea un proyecto kotlin con gradle o utiliza uno que ya tengas.
     2. Añade las dependencias para trabajar con SQLite.
     3. Descarga el fichero con la base de datos de ejemplo desde el siguiente enlace:
-    [plantas.sqlite](material/plantas.sqlite){:plantas.sqlite}
+    [florabotanica.sqlite](material/florabotanica.sqlite){:florabotanica.sqlite}
     4. Copia el fichero en la carpeta correcta del proyecto.
     5. Ejecuta el programa y comprueba que la salida por consola es la siguiente:
 
-        <span class="mi_consola">Ruta de la BD: F:\...\src\main\resources\plantas.sqlite</span>
+        <span class="mi_consola">Ruta de la BD: F:\...\src\main\resources\florabotanica.sqlite</span>
 
         <span class="mi_consola">Conexión establecida correctamente con SQLite</span>
 
@@ -142,7 +137,7 @@ También es muy recomendable utilizar los bloques **try-catch-finally** para cap
 
 <span class="mis_ejemplos">Ejemplo 2: Objeto para manejar la conexión</span> 
 
-El siguiente ejemplo es un objeto que maneja la conexión, en este caso llamado **PlantasBD.kt** en el que hay tres funciones, una para abrir la conexión, otra para testearla y la última para cerrarla:
+El siguiente ejemplo es un objeto que maneja la conexión a la BD, en este caso llamado **FlorabotanicaBD.kt** en el que hay tres funciones, una para abrir la conexión, otra para testearla y la última para cerrarla:
 
 ``` kotlin
 import java.io.File
@@ -150,9 +145,9 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
 
-object PlantasBD {
+object FlorabotanicaBD {
     // Ruta al archivo de base de datos SQLite
-    private val dbPath = "datos/plantas.sqlite"
+    private val dbPath = "datos/florabotanica.sqlite"
     private val dbFile = File(dbPath)
     private val url = "jdbc:sqlite:${dbFile.absolutePath}"
 
@@ -190,10 +185,10 @@ De esta forma, cuando el programa necesite acceder a la BD llamará a la funció
 
 ``` kotlin
 fun main() {
-    val conn = PlantasBD.getConnection()
+    val conn = FlorabotanicaBD.getConnection()
     if (conn != null) {
         println("Conectado a la BD correctamente.")
-        PlantasBD.closeConnection(conn)
+        FlorabotanicaBD.closeConnection(conn)
     }
 }
 ```
