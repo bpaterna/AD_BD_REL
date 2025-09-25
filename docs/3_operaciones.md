@@ -79,7 +79,7 @@ Cuándo:
 - Estás trabajando en un proyecto que sigue un estilo más clásico de Java.
 
 
-
+<span class="mis_ejemplos">Ejemplo 3: Utilización de .use</span> 
 
 A continuación se muestra un **ejemplo con .use (sin necesidad de closeConnection)** que utiliza la función `getConnection` declarada en **PlantasBD.kt** para abrir la conexión de forma que:
 
@@ -107,6 +107,8 @@ fun main() {
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
 
+
+<span class="mis_ejemplos">Ejemplo 4: Utilización de close()</span> 
 
 Si no utilizas **use {}** en Kotlin, entonces debes cerrar manualmente cada uno de los recursos abiertos (ResultSet, Statement y Connection) utilizando **close()**, y normalmente deberías hacerlo dentro de un bloque **finally** para garantizar su cierre incluso si ocurre un error. El orden correcto de cierre es del más interno al más externo. A continuación tienes un ejemplo equivalente al ejemplo anterior pero sin utilizar **.use**:
 
@@ -159,7 +161,8 @@ Otra buena práctica es crear un objeto para manejar las diferentes operaciones 
 - Claridad: el resto de tu app se lee mucho más limpio, sin SQL mezclado.
 
 
-<span class="mi_h2">Ejemplo DAO en SQlite</span>
+
+<span class="mis_ejemplos">Ejemplo 5: DAO en SQlite</span> 
 
 El siguiente ejemplo es el DAO para la tabla `plantas` de la BD `plantas.sqlite` en la que se utiliza el código de conexión del objeto **PlantasBD.kt**.
 
