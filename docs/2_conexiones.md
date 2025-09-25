@@ -91,7 +91,7 @@ dependencies {
 -->
 
 
-<span class="mis_ejemplos">Ejemplo 1: Conexión a SQLite<</span> 
+<span class="mis_ejemplos">Ejemplo 1: Conexión a SQLite</span> 
 
 El siguiente ejemplo muestra como conectar a una base de datos **SQLite** llamada `plantas.sqlite` que se encuentra en la carpeta `datos` dentro de un proyecto en **Kotlin**.
 
