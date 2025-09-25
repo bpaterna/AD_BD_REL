@@ -164,11 +164,11 @@ Otra buena práctica es crear un objeto para manejar las diferentes operaciones 
 
 <span class="mis_ejemplos">Ejemplo 5: DAO en SQlite</span> 
 
-El siguiente ejemplo es el DAO para la tabla `plantas` de la BD `florabotanica.sqlite` en la que se utiliza el código de conexión del objeto **FlorabotanicaBD.kt**. La estructura de la tabla es la siguiente:
+El siguiente ejemplo es el DAO para la tabla `plantas` de la BD `florabotanica.sqlite` en la que se utiliza el código de conexión del objeto **FlorabotanicaBD.kt**. La estructura de la tabla `plantas` es la siguiente:
 
 ![Imagen 1](img/3_plantas.png)
 
-En el ejemplo se declaran funciones para leer la información de la tabla, añdir registros nuevos, modificar la información existenete y borrarla. Para ello se utiliza un data class **Planta.kt** con la estructura siguiente (misma estructura que la tabla de la BD):
+Se utiliza un data class con la misma estructura que la tabla `plantas` y su código se guarda en el archivo **Planta.kt**:
 
 ``` kotlin
 data class Planta(
@@ -180,7 +180,7 @@ data class Planta(
 )
 ```
 
-El código del archivo **PlantasDAO.kt** es el siguiente:
+También se declaran funciones para leer la información de la tabla, añdir registros nuevos, modificar la información existenete y borrarla. El código se escribe en el archivo **PlantasDAO.kt** y es el siguiente:
 
 ``` kotlin
 object PlantasDAO {
