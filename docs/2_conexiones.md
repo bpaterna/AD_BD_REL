@@ -87,9 +87,13 @@ dependencies {
 }
 ```
 
-<span class="mi_h2">Conexión a SQLite</span>
+<!-- <span class="mi_h2">Conexión a SQLite</span> 
+-->
 
-A continuación se describe cómo conectar a una base de datos **SQLite** llamada `plantas.sqlite` que se encuentra en la carpeta `datos` dentro de un proyecto en **Kotlin**.
+
+<span class="mis_ejemplos">Ejemplo 1: Conexión a SQLite<</span> 
+
+El siguiente ejemplo muestra como conectar a una base de datos **SQLite** llamada `plantas.sqlite` que se encuentra en la carpeta `datos` dentro de un proyecto en **Kotlin**.
 
 
 ``` kotlin
@@ -136,7 +140,9 @@ Una de las ventajas de trabajar de esta forma es que evitas repetir código para
 
 También es muy recomendable utilizar los bloques **try-catch-finally** para capturar posibles errores y excepciones.
 
-Un ejemplo del objeto que maneja la conexión, en este caso llamado **PlantasBD.kt**, podría ser el siguiente:
+<span class="mis_ejemplos">Ejemplo 2: Objeto para manejar la conexión</span> 
+
+El siguiente ejemplo es un objeto que maneja la conexión, en este caso llamado **PlantasBD.kt** en el que hay tres funciones, una para abrir la conexión, otra para testearla y la última para cerrarla:
 
 ``` kotlin
 import java.io.File
