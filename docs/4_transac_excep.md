@@ -129,6 +129,6 @@ Si no se produce ningún error se hará el `commit` y en caso contrario el `roll
 !!! success "Realiza lo siguiente" 
     Prueba el código de ejemplo y verifica que funciona correctemente.
 
-!!! warning "Práctica 4: Trabaja con tu base de datos" 
-    Replica el ejemplo anterior para que funcione con tu base de datos.
+!!! warning "Práctica 5: Trabaja con tu base de datos" 
+    Añade a tu aplicación alguna funcionalidad parecida a la del ejemplo para poder probar las transacciones sobre tu base de datos.
 
