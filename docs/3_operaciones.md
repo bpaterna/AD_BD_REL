@@ -113,6 +113,10 @@ fun main() {
 Si no utilizas **use {}** en Kotlin, entonces debes cerrar manualmente cada uno de los recursos abiertos (ResultSet, Statement y Connection) utilizando **close()**, y normalmente deberías hacerlo dentro de un bloque **finally** para garantizar su cierre incluso si ocurre un error. El orden correcto de cierre es del más interno al más externo. A continuación tienes un ejemplo equivalente al ejemplo anterior pero sin utilizar **.use**:
 
 ``` kotlin
+import java.sql.Connection
+import java.sql.Statement
+import java.sql.ResultSet
+
 fun main() {
     var conn: Connection? = null
     var stmt: Statement? = null
