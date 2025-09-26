@@ -1,0 +1,640 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Begoña Paterna">
+      
+      
+        <link rel="canonical" href="https://bpaterna.github.io/AD_BD_REL/4_transac_excep.html">
+      
+      
+        <link rel="prev" href="3_operaciones.html">
+      
+      
+        <link rel="next" href="5_func_proc.html">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>4. Transacciones y excepciones - Bases de datos relacionales</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#transacciones-y-excepciones" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="." title="Bases de datos relacionales" class="md-header__button md-logo" aria-label="Bases de datos relacionales" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bases de datos relacionales
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4. Transacciones y excepciones
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Bases de datos relacionales" class="md-nav__button md-logo" aria-label="Bases de datos relacionales" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Bases de datos relacionales
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="0_index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Guía de uso
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Contenido
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Contenido
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="1_introduccion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="2_conexiones.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Conexión al SGBD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="3_operaciones.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Operaciones con la BD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="4_transac_excep.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Transacciones y excepciones
+    
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5_func_proc.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Funciones y procedimientos almacenados
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Material adicional
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Material adicional
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="db_browser_sqlite.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DB Browser
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="transacciones-y-excepciones">Transacciones y excepciones<a class="headerlink" href="#transacciones-y-excepciones" title="Permanent link">&para;</a></h1>
+<p><span class="mi_h2">Transacciones</span></p>
+<p>Una transacción es una secuencia de una o más operaciones sobre una base de datos que deben ejecutarse como una unidad indivisible. El objetivo es asegurar que todas las operaciones se completen con éxito o, en caso de fallo, ninguna de ellas se aplique, manteniendo así la base de datos en un estado consistente. Por ejemplo, en una transferencia bancaria, si falla el abono en una cuenta, se cancela el débito en la otra.</p>
+<p>Las transacciones se gestionan mediante comandos como BEGIN TRANSACTION (para iniciar), COMMIT (para confirmar los cambios) y ROLLBACK (para deshacer los cambios en caso de error). Este mecanismo protege la base de datos frente a fallos parciales y situaciones de concurrencia, asegurando que los datos siempre reflejen una realidad válida y coherente.</p>
+<p><strong>Propiedades de una transacción (ACID)</strong></p>
+<p>Las transacciones garantizan propiedades fundamentales, conocidas por el acrónimo ACID:</p>
+<table>
+<thead>
+<tr>
+<th>Propiedad</th>
+<th>Significado breve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Atomicidad</td>
+<td>Todas las operaciones se ejecutan o ninguna lo hace</td>
+</tr>
+<tr>
+<td>Consistencia</td>
+<td>El sistema pasa de un estado válido a otro</td>
+</tr>
+<tr>
+<td>Isolación</td>
+<td>No interfiere con otras transacciones simultáneas</td>
+</tr>
+<tr>
+<td>Durabilidad</td>
+<td>Una vez confirmada, el cambio permanece</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Comandos clave</strong></p>
+<p>Para controlar correctamente una transacción desde el código, necesitamos usar tres comandos clave:</p>
+<ul>
+<li><strong>commit()</strong>: Confirma los cambios realizados por la transacción, haciéndolos permanentes.</li>
+<li><strong>rollback()</strong>: Revierte todos los cambios realizados durante la transacción actual, volviendo al estado anterior.</li>
+</ul>
+<p>Por defecto, muchas conexiones JDBC están en modo <strong>auto-commit</strong>, es decir, cada operación se ejecuta y confirma automáticamente. Para usar transacciones de forma manual, debes desactivar este modo:</p>
+<div class="highlight"><pre><span></span><code>    conexion.autoCommit = false
+</code></pre></div>
+<p><span class="mi_h2">Excepciones</span></p>
+<p>El manejo de excepciones en las transacciones es absolutamente necesario para garantizar que los datos de la base de datos no queden en un estado inconsistente o corrupto cuando ocurre un error durante una operación.</p>
+<p>Una transacción sin control de errores no es una transacción segura. Siempre hay que estar preparado para deshacer todo si algo sale mal.</p>
+<p>Cuando realizamos varias operaciones dentro de una misma transacción (por ejemplo, una transferencia bancaria), pueden ocurrir errores como:</p>
+<ul>
+<li>un fallo de conexión,</li>
+<li>un ID incorrecto,</li>
+<li>un valor nulo inesperado,</li>
+<li>un error lógico como saldo insuficiente.</li>
+</ul>
+<p>Si no controlamos esos errores, la base de datos podría:</p>
+<ul>
+<li>Aplicar solo algunas de las operaciones</li>
+<li>Dejar datos parcialmente modificados</li>
+<li>Generar resultados incorrectos para otros usuarios</li>
+</ul>
+<p>Para evitarlo se utiliza un bloque <strong>try-catch</strong> que:</p>
+<ul>
+<li>Llama a commit() si todo sale bien</li>
+<li>Llama a rollback() si ocurre cualquier excepción</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">conexion</span><span class="p">.</span><span class="na">autoCommit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
+
+<span class="w">            </span><span class="c1">// Varias operaciones SQL...</span>
+<span class="w">            </span><span class="n">conexion</span><span class="p">.</span><span class="na">commit</span><span class="p">()</span><span class="w">  </span><span class="c1">// Todo bien</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">conexion</span><span class="p">.</span><span class="na">rollback</span><span class="p">()</span><span class="w">  </span><span class="c1">// Algo falló → revertir</span>
+<span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error en la transacción. Cambios anulados.&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+</code></pre></div>
+<p><span class="mis_ejemplos">Ejemplo 6: commit y rollback</span> </p>
+<p>Para el siguiente ejemplo se ha ampliado la BD con dos tablas: <code>jardines</code>y  <code>jardines_plantas</code> la estructura de estas tablas es la siguiente:</p>
+<p><img alt="Imagen 1" src="img/4_jardines.png" /></p>
+<p><img alt="Imagen 1" src="img/4_jardines_plantas.png" /></p>
+<p>Supongamos que queremos llevar varias unidades de una planta a un jardín. El programa debe actualizar el stock en la tabla <code>plantas</code> (restando las unidades que llevamos al jardín) en la <code>tabla</code> y añadir un registro en la tabla <code>jardines_plantas</code> indicando el jadín, la planta y la cantidad. Ambas operaciones deben realizarse juntas, o no realizarse ninguna. El código sería el siguiente:</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.SQLException</span>
+
+<span class="kd">fun</span><span class="w"> </span><span class="nf">llevarPlantasAJardin</span><span class="p">(</span><span class="n">id_jardin</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">id_planta</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">cantidad</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">FlorabotanicaBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">conn</span><span class="p">.</span><span class="na">autoCommit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="w">  </span><span class="c1">// Iniciar transacción manual</span>
+
+<span class="w">            </span><span class="c1">// Restar stock a la planta</span>
+<span class="w">            </span><span class="kd">val</span><span class="w"> </span><span class="nv">stock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">conn</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;UPDATE plantas SET stock = stock - </span><span class="si">$</span><span class="n">cantidad</span><span class="s"> WHERE id_planta = ?&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">stock</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">id_planta</span><span class="p">)</span>
+<span class="w">            </span><span class="n">stock</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">()</span>
+
+<span class="w">            </span><span class="c1">// Añadir línea en tabla jardines_plantas</span>
+<span class="w">            </span><span class="kd">val</span><span class="w"> </span><span class="nv">plantar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">conn</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;INSERT INTO jardines_plantas(id_jardin, id_planta, cantidad) VALUES (?, ?, ?)&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="n">plantar</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">id_jardin</span><span class="p">)</span>
+<span class="w">            </span><span class="n">plantar</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">id_planta</span><span class="p">)</span>
+<span class="w">            </span><span class="n">plantar</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">cantidad</span><span class="p">)</span>
+<span class="w">            </span><span class="n">plantar</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">()</span>
+
+<span class="w">            </span><span class="c1">// Confirmar cambios</span>
+<span class="w">            </span><span class="n">conn</span><span class="p">.</span><span class="na">commit</span><span class="p">()</span>
+<span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Transferencia realizada con éxito.&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">SQLException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="o">?.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;UNIQUE constraint failed&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error: intento de insertar clave duplicada&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="n">conn</span><span class="p">.</span><span class="na">rollback</span><span class="p">()</span>
+<span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Transacción revertida.&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">throw</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="c1">// otros errores, relanzamos</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>La llamada sería:</p>
+<div class="highlight"><pre><span></span><code><span class="n">llevarPlantasAJardin</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">2</span><span class="p">)</span>
+</code></pre></div>
+<p>Si no se produce ningún error se hará el <code>commit</code> y en caso contrario el <code>rollback</code></p>
+<div class="admonition success">
+<p class="admonition-title">Realiza lo siguiente</p>
+<p>Prueba el código de ejemplo y verifica que funciona correctemente.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Práctica 5: Trabaja con tu base de datos</p>
+<p>Añade a tu aplicación alguna funcionalidad parecida a la del ejemplo para poder probar las transacciones sobre tu base de datos.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": ".", "features": ["content.code.copy", "content.tabs.link", "navigation.instant", "navigation.top", "navigation.sections", "search.highlight", "search.suggest", "toc.integrate"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
