@@ -23,6 +23,7 @@ nav:
     - 2. Conexión al SGBD: 2_conexiones.md
     - 3. Operaciones con la BD: 3_operaciones.md
     - 4. Transacciones y excepciones: 4_transac_excep.md
+    - 5. Funciones y procedimientos almacenados: 5_func_proc.md
   - Material adicional:
     - DB Browser: db_browser_sqlite.md
 markdown_extensions:
